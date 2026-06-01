@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RatioRouteImport } from './routes/ratio'
+import { Route as ProportionRouteImport } from './routes/proportion'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
 import { Route as CoordinatesRouteImport } from './routes/coordinates'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const RatioRoute = RatioRouteImport.update({
   id: '/ratio',
   path: '/ratio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProportionRoute = ProportionRouteImport.update({
+  id: '/proportion',
+  path: '/proportion',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GettingStartedRoute = GettingStartedRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coordinates' | '/getting-started' | '/ratio'
+  fullPaths:
+    | '/'
+    | '/coordinates'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coordinates' | '/getting-started' | '/ratio'
-  id: '__root__' | '/' | '/coordinates' | '/getting-started' | '/ratio'
+  to: '/' | '/coordinates' | '/getting-started' | '/proportion' | '/ratio'
+  id:
+    | '__root__'
+    | '/'
+    | '/coordinates'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoordinatesRoute: typeof CoordinatesRoute
   GettingStartedRoute: typeof GettingStartedRoute
+  ProportionRoute: typeof ProportionRoute
   RatioRoute: typeof RatioRoute
 }
 
@@ -76,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/ratio'
       fullPath: '/ratio'
       preLoaderRoute: typeof RatioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proportion': {
+      id: '/proportion'
+      path: '/proportion'
+      fullPath: '/proportion'
+      preLoaderRoute: typeof ProportionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/getting-started': {
@@ -106,6 +134,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoordinatesRoute: CoordinatesRoute,
   GettingStartedRoute: GettingStartedRoute,
+  ProportionRoute: ProportionRoute,
   RatioRoute: RatioRoute,
 }
 export const routeTree = rootRouteImport
