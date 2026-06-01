@@ -15,6 +15,7 @@ import { Route as ProportionRouteImport } from './routes/proportion'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
 import { Route as FinalChallengeRouteImport } from './routes/final-challenge'
 import { Route as CoordinatesRouteImport } from './routes/coordinates'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ReflectionRoute = ReflectionRouteImport.update({
@@ -47,6 +48,11 @@ const CoordinatesRoute = CoordinatesRouteImport.update({
   path: '/coordinates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/coordinates': typeof CoordinatesRoute
   '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/coordinates': typeof CoordinatesRoute
   '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/coordinates': typeof CoordinatesRoute
   '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/coordinates'
     | '/final-challenge'
     | '/getting-started'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/coordinates'
     | '/final-challenge'
     | '/getting-started'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/coordinates'
     | '/final-challenge'
     | '/getting-started'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CoordinatesRoute: typeof CoordinatesRoute
   FinalChallengeRoute: typeof FinalChallengeRoute
   GettingStartedRoute: typeof GettingStartedRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoordinatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CoordinatesRoute: CoordinatesRoute,
   FinalChallengeRoute: FinalChallengeRoute,
   GettingStartedRoute: GettingStartedRoute,
