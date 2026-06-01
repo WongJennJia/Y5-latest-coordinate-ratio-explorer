@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RatioRouteImport } from './routes/ratio'
 import { Route as ProportionRouteImport } from './routes/proportion'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
+import { Route as FinalChallengeRouteImport } from './routes/final-challenge'
 import { Route as CoordinatesRouteImport } from './routes/coordinates'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const GettingStartedRoute = GettingStartedRouteImport.update({
   path: '/getting-started',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FinalChallengeRoute = FinalChallengeRouteImport.update({
+  id: '/final-challenge',
+  path: '/final-challenge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoordinatesRoute = CoordinatesRouteImport.update({
   id: '/coordinates',
   path: '/coordinates',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
@@ -68,15 +77,23 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/coordinates'
+    | '/final-challenge'
     | '/getting-started'
     | '/proportion'
     | '/ratio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coordinates' | '/getting-started' | '/proportion' | '/ratio'
+  to:
+    | '/'
+    | '/coordinates'
+    | '/final-challenge'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
   id:
     | '__root__'
     | '/'
     | '/coordinates'
+    | '/final-challenge'
     | '/getting-started'
     | '/proportion'
     | '/ratio'
@@ -85,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoordinatesRoute: typeof CoordinatesRoute
+  FinalChallengeRoute: typeof FinalChallengeRoute
   GettingStartedRoute: typeof GettingStartedRoute
   ProportionRoute: typeof ProportionRoute
   RatioRoute: typeof RatioRoute
@@ -113,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GettingStartedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/final-challenge': {
+      id: '/final-challenge'
+      path: '/final-challenge'
+      fullPath: '/final-challenge'
+      preLoaderRoute: typeof FinalChallengeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/coordinates': {
       id: '/coordinates'
       path: '/coordinates'
@@ -133,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoordinatesRoute: CoordinatesRoute,
+  FinalChallengeRoute: FinalChallengeRoute,
   GettingStartedRoute: GettingStartedRoute,
   ProportionRoute: ProportionRoute,
   RatioRoute: RatioRoute,
