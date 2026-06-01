@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReflectionRouteImport } from './routes/reflection'
 import { Route as RatioRouteImport } from './routes/ratio'
 import { Route as ProportionRouteImport } from './routes/proportion'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
@@ -16,6 +17,11 @@ import { Route as FinalChallengeRouteImport } from './routes/final-challenge'
 import { Route as CoordinatesRouteImport } from './routes/coordinates'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ReflectionRoute = ReflectionRouteImport.update({
+  id: '/reflection',
+  path: '/reflection',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RatioRoute = RatioRouteImport.update({
   id: '/ratio',
   path: '/ratio',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/getting-started': typeof GettingStartedRoute
   '/proportion': typeof ProportionRoute
   '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/getting-started'
     | '/proportion'
     | '/ratio'
+    | '/reflection'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/getting-started'
     | '/proportion'
     | '/ratio'
+    | '/reflection'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/getting-started'
     | '/proportion'
     | '/ratio'
+    | '/reflection'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,10 +118,18 @@ export interface RootRouteChildren {
   GettingStartedRoute: typeof GettingStartedRoute
   ProportionRoute: typeof ProportionRoute
   RatioRoute: typeof RatioRoute
+  ReflectionRoute: typeof ReflectionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reflection': {
+      id: '/reflection'
+      path: '/reflection'
+      fullPath: '/reflection'
+      preLoaderRoute: typeof ReflectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ratio': {
       id: '/ratio'
       path: '/ratio'
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   GettingStartedRoute: GettingStartedRoute,
   ProportionRoute: ProportionRoute,
   RatioRoute: RatioRoute,
+  ReflectionRoute: ReflectionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
