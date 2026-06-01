@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "appName": "Math Explorer",
+    "subtitle": "Coordinates, Ratio & Proportion Adventure",
+    "course": "EDUP2112",
+    "audience": "Year 5 Primary (10–11 years)",
+    "curriculum": "DSKP KSSR Mathematics Year 5",
+    "videoId": "byjmR7JBXKc",
+    "developer": "Your Name",
+    "institution": "Institut Pendidikan Guru (IPG)"
+  },
+  "milestones": [
+    { "id": "coordinates", "label": "Coordinates", "icon": "Grid3x3", "to": "/coordinates" },
+    { "id": "ratio", "label": "Ratio", "icon": "Scale", "to": "/ratio" },
+    { "id": "proportion", "label": "Proportion", "icon": "Percent", "to": "/proportion" },
+    { "id": "final", "label": "Final Challenge", "icon": "Trophy", "to": "/final-challenge" }
+  ],
+  "missions": [
+    {
+      "id": "coordinates",
+      "title": "Coordinates Mission",
+      "topicCode": "7.1",
+      "tagline": "Map the world with X and Y!",
+      "icon": "Grid3x3",
+      "standard": "Standard 7.1.1 — Determine the horizontal and vertical distance between two coordinates.",
+      "performanceLevels": [
+        { "pl": "PL1", "desc": "State the horizontal axis (x) and vertical axis (y)." },
+        { "pl": "PL2", "desc": "Explain the steps to find the distance between two points." },
+        { "pl": "PL3", "desc": "Justify the answer using reasoning and examples." }
+      ],
+      "learn": {
+        "intro": "A coordinate tells us an exact position on a grid using two numbers (x, y). The x-value moves left↔right along the horizontal axis, and the y-value moves up↕down along the vertical axis.",
+        "concepts": [
+          "The horizontal axis is the x-axis; the vertical axis is the y-axis.",
+          "A point is written as (x, y) — always x first, then y.",
+          "Horizontal distance = difference between the two x-values.",
+          "Vertical distance = difference between the two y-values."
+        ],
+        "interactivePlaceholder": "Native interactive coordinate grid helper will be embedded here."
+      },
+      "explore": {
+        "tool": "GeoGebra Classroom",
+        "embedUrl": "https://www.geogebra.org/classroom/asxd8tzc",
+        "note": "Drag the points and watch the horizontal and vertical distances change in real time."
+      },
+      "practice": {
+        "intro": "Check your understanding with these quick questions.",
+        "questions": [
+          {
+            "q": "In the coordinate (4, 7), which number is on the x-axis?",
+            "options": ["4", "7", "11", "47"],
+            "answer": 0
+          },
+          {
+            "q": "Find the horizontal distance between (2, 3) and (8, 3).",
+            "options": ["3", "5", "6", "10"],
+            "answer": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "ratio",
+      "title": "Ratio Mission",
+      "topicCode": "7.2",
+      "tagline": "Compare amounts the smart way!",
+      "icon": "Scale",
+      "standard": "Standard 7.2.1 — Represent ratio involving Part to Part, Part to Whole, and Whole to Part.",
+      "performanceLevels": [
+        { "pl": "PL1", "desc": "State a ratio from a given situation." },
+        { "pl": "PL2", "desc": "Represent Part to Part, Part to Whole and Whole to Part." },
+        { "pl": "PL3", "desc": "Solve and explain ratio problems in real contexts." }
+      ],
+      "learn": {
+        "intro": "A ratio compares two or more quantities. For example, if a 'Sirap Bandung' uses 2 cups of syrup to 5 cups of milk, the ratio of syrup to milk is 2 : 5.",
+        "concepts": [
+          "Part to Part — compares one part with another part (syrup : milk = 2 : 5).",
+          "Part to Whole — compares one part with the total (syrup : total = 2 : 7).",
+          "Whole to Part — compares the total with one part (total : milk = 7 : 5)."
+        ],
+        "interactivePlaceholder": "Interactive ratio bar/mixer will be embedded here."
+      },
+      "explore": {
+        "tool": "GeoGebra Classroom",
+        "embedUrl": "https://www.geogebra.org/classroom/asxd8tzc",
+        "note": "Adjust the bars to see how Part-to-Part and Part-to-Whole ratios relate."
+      },
+      "practice": {
+        "intro": "Check your understanding with these quick questions.",
+        "questions": [
+          {
+            "q": "A box has 3 red and 4 blue marbles. What is the ratio red : blue?",
+            "options": ["3 : 4", "4 : 3", "3 : 7", "7 : 3"],
+            "answer": 0
+          },
+          {
+            "q": "Using the same box, what is red : total (Part to Whole)?",
+            "options": ["3 : 4", "3 : 7", "7 : 3", "4 : 7"],
+            "answer": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "proportion",
+      "title": "Proportion Mission",
+      "topicCode": "7.3",
+      "tagline": "Scale recipes up and down!",
+      "icon": "Percent",
+      "standard": "Standard 7.3.1 — Determine the unknown value using proportion.",
+      "performanceLevels": [
+        { "pl": "PL1", "desc": "State the meaning of proportion." },
+        { "pl": "PL2", "desc": "Set up an equivalent proportion from a situation." },
+        { "pl": "PL3", "desc": "Determine and justify the unknown value." }
+      ],
+      "learn": {
+        "intro": "A proportion shows that two ratios are equal. If 2 satay sticks cost RM3, then 4 satay sticks cost RM6 — the ratios 2 : 3 and 4 : 6 are equal.",
+        "concepts": [
+          "Two equal ratios form a proportion: a : b = c : d.",
+          "Multiply or divide both parts by the same number to keep it equal.",
+          "Use cross-relationships to find an unknown value."
+        ],
+        "interactivePlaceholder": "Interactive proportion solver will be embedded here."
+      },
+      "explore": {
+        "tool": "GeoGebra Classroom",
+        "embedUrl": "https://www.geogebra.org/classroom/asxd8tzc",
+        "note": "Scale the recipe and watch both quantities change in proportion."
+      },
+      "practice": {
+        "intro": "Check your understanding with these quick questions.",
+        "questions": [
+          {
+            "q": "If 2 satay sticks cost RM3, how much do 6 satay sticks cost?",
+            "options": ["RM6", "RM9", "RM12", "RM18"],
+            "answer": 1
+          },
+          {
+            "q": "Which pair of ratios forms a proportion?",
+            "options": ["1 : 2 and 3 : 5", "2 : 3 and 4 : 6", "3 : 4 and 6 : 9", "1 : 5 and 2 : 8"],
+            "answer": 1
+          }
+        ]
+      }
+    }
+  ],
+  "finalChallenge": {
+    "title": "Pesta Ria Sekolah",
+    "subtitle": "The Malaysian School Carnival Simulation",
+    "intro": "Welcome to Pesta Ria Sekolah! Use everything you learned to help run the carnival. Each stall is a real-world mission combining coordinates, ratio and proportion.",
+    "stages": [
+      {
+        "id": "stage-1",
+        "name": "Find Gerai Satay",
+        "topic": "Coordinates (7.1)",
+        "icon": "MapPin",
+        "desc": "Read the carnival map and locate the satay stall using its coordinate, then calculate the walking distance from the gate."
+      },
+      {
+        "id": "stage-2",
+        "name": "Mix Sirap Bandung",
+        "topic": "Ratio (7.2)",
+        "icon": "CupSoda",
+        "desc": "Use the ratio sliders to mix syrup and milk in the correct ratio for a perfect batch of Sirap Bandung."
+      },
+      {
+        "id": "stage-3",
+        "name": "Scale the Kuih Recipe",
+        "topic": "Proportion (7.3)",
+        "icon": "ChefHat",
+        "desc": "The kuih stall got a big order! Use proportion to scale the recipe and find the unknown quantities."
+      }
+    ]
+  },
+  "reflection": {
+    "strengths": [
+      "Data-driven content architecture lets teachers edit lessons and quizzes without touching code.",
+      "Multimedia integration (video, GeoGebra, H5P) supports varied learner preferences.",
+      "Gamified roadmap with unlock progression sustains pupil motivation and autonomy."
+    ],
+    "improvements": [
+      "Add automated formative feedback and progress analytics for the teacher.",
+      "Provide Bahasa Melayu / English bilingual toggle for wider accessibility.",
+      "Introduce adaptive difficulty based on pupil performance."
+    ],
+    "justifications": [
+      "Aligned to KPPB (Kemahiran Pemikiran Aras Tinggi) by scaffolding PL1→PL3 within each mission.",
+      "Constructivist 'Learn → Explore → Practice' flow encourages active knowledge building.",
+      "Real-world Malaysian carnival context strengthens contextual and cross-cultural relevance."
+    ]
+  },
+  "dskp": [
+    { "topic": "7.1 Coordinates", "standard": "7.1.1", "desc": "Determine horizontal and vertical distance between two coordinates." },
+    { "topic": "7.2 Ratio", "standard": "7.2.1", "desc": "Represent ratio: Part to Part, Part to Whole, Whole to Part." },
+    { "topic": "7.3 Proportion", "standard": "7.3.1", "desc": "Determine unknown value using proportion." }
+  ]
+}
