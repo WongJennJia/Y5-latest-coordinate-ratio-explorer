@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RatioRouteImport } from './routes/ratio'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
 import { Route as CoordinatesRouteImport } from './routes/coordinates'
 import { Route as IndexRouteImport } from './routes/index'
 
+const RatioRoute = RatioRouteImport.update({
+  id: '/ratio',
+  path: '/ratio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GettingStartedRoute = GettingStartedRouteImport.update({
   id: '/getting-started',
   path: '/getting-started',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/ratio': typeof RatioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/ratio': typeof RatioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
+  '/ratio': typeof RatioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coordinates' | '/getting-started'
+  fullPaths: '/' | '/coordinates' | '/getting-started' | '/ratio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coordinates' | '/getting-started'
-  id: '__root__' | '/' | '/coordinates' | '/getting-started'
+  to: '/' | '/coordinates' | '/getting-started' | '/ratio'
+  id: '__root__' | '/' | '/coordinates' | '/getting-started' | '/ratio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoordinatesRoute: typeof CoordinatesRoute
   GettingStartedRoute: typeof GettingStartedRoute
+  RatioRoute: typeof RatioRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ratio': {
+      id: '/ratio'
+      path: '/ratio'
+      fullPath: '/ratio'
+      preLoaderRoute: typeof RatioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/getting-started': {
       id: '/getting-started'
       path: '/getting-started'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoordinatesRoute: CoordinatesRoute,
   GettingStartedRoute: GettingStartedRoute,
+  RatioRoute: RatioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
