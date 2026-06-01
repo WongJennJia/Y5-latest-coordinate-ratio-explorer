@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReflectionRouteImport } from './routes/reflection'
+import { Route as RatioRouteImport } from './routes/ratio'
+import { Route as ProportionRouteImport } from './routes/proportion'
+import { Route as GettingStartedRouteImport } from './routes/getting-started'
+import { Route as FinalChallengeRouteImport } from './routes/final-challenge'
+import { Route as CoordinatesRouteImport } from './routes/coordinates'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ReflectionRoute = ReflectionRouteImport.update({
+  id: '/reflection',
+  path: '/reflection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RatioRoute = RatioRouteImport.update({
+  id: '/ratio',
+  path: '/ratio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProportionRoute = ProportionRouteImport.update({
+  id: '/proportion',
+  path: '/proportion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GettingStartedRoute = GettingStartedRouteImport.update({
+  id: '/getting-started',
+  path: '/getting-started',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinalChallengeRoute = FinalChallengeRouteImport.update({
+  id: '/final-challenge',
+  path: '/final-challenge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoordinatesRoute = CoordinatesRouteImport.update({
+  id: '/coordinates',
+  path: '/coordinates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
+  '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
+  '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
+  '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
+  '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coordinates': typeof CoordinatesRoute
+  '/final-challenge': typeof FinalChallengeRoute
+  '/getting-started': typeof GettingStartedRoute
+  '/proportion': typeof ProportionRoute
+  '/ratio': typeof RatioRoute
+  '/reflection': typeof ReflectionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/coordinates'
+    | '/final-challenge'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
+    | '/reflection'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/coordinates'
+    | '/final-challenge'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
+    | '/reflection'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/coordinates'
+    | '/final-challenge'
+    | '/getting-started'
+    | '/proportion'
+    | '/ratio'
+    | '/reflection'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CoordinatesRoute: typeof CoordinatesRoute
+  FinalChallengeRoute: typeof FinalChallengeRoute
+  GettingStartedRoute: typeof GettingStartedRoute
+  ProportionRoute: typeof ProportionRoute
+  RatioRoute: typeof RatioRoute
+  ReflectionRoute: typeof ReflectionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reflection': {
+      id: '/reflection'
+      path: '/reflection'
+      fullPath: '/reflection'
+      preLoaderRoute: typeof ReflectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ratio': {
+      id: '/ratio'
+      path: '/ratio'
+      fullPath: '/ratio'
+      preLoaderRoute: typeof RatioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proportion': {
+      id: '/proportion'
+      path: '/proportion'
+      fullPath: '/proportion'
+      preLoaderRoute: typeof ProportionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/getting-started': {
+      id: '/getting-started'
+      path: '/getting-started'
+      fullPath: '/getting-started'
+      preLoaderRoute: typeof GettingStartedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/final-challenge': {
+      id: '/final-challenge'
+      path: '/final-challenge'
+      fullPath: '/final-challenge'
+      preLoaderRoute: typeof FinalChallengeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coordinates': {
+      id: '/coordinates'
+      path: '/coordinates'
+      fullPath: '/coordinates'
+      preLoaderRoute: typeof CoordinatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +197,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CoordinatesRoute: CoordinatesRoute,
+  FinalChallengeRoute: FinalChallengeRoute,
+  GettingStartedRoute: GettingStartedRoute,
+  ProportionRoute: ProportionRoute,
+  RatioRoute: RatioRoute,
+  ReflectionRoute: ReflectionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
