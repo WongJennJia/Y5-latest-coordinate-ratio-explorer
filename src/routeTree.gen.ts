@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as GettingStartedRouteImport } from './routes/getting-started'
+import { Route as CoordinatesRouteImport } from './routes/coordinates'
 import { Route as IndexRouteImport } from './routes/index'
 
 const GettingStartedRoute = GettingStartedRouteImport.update({
   id: '/getting-started',
   path: '/getting-started',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoordinatesRoute = CoordinatesRouteImport.update({
+  id: '/coordinates',
+  path: '/coordinates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/coordinates': typeof CoordinatesRoute
   '/getting-started': typeof GettingStartedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/getting-started'
+  fullPaths: '/' | '/coordinates' | '/getting-started'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/getting-started'
-  id: '__root__' | '/' | '/getting-started'
+  to: '/' | '/coordinates' | '/getting-started'
+  id: '__root__' | '/' | '/coordinates' | '/getting-started'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoordinatesRoute: typeof CoordinatesRoute
   GettingStartedRoute: typeof GettingStartedRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/getting-started'
       fullPath: '/getting-started'
       preLoaderRoute: typeof GettingStartedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coordinates': {
+      id: '/coordinates'
+      path: '/coordinates'
+      fullPath: '/coordinates'
+      preLoaderRoute: typeof CoordinatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoordinatesRoute: CoordinatesRoute,
   GettingStartedRoute: GettingStartedRoute,
 }
 export const routeTree = rootRouteImport
