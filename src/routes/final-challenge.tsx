@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Trophy, MapPin, CupSoda, ChefHat, Lock, PartyPopper, Sparkles } from "lucide-react";
 
 import { PageHeader } from "@/components/PageHeader";
+import { SirapBandungChallenge } from "@/components/SirapBandungChallenge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -83,14 +84,30 @@ function FinalChallengePage() {
               </CardHeader>
               <CardContent className="flex flex-1 flex-col justify-between gap-4">
                 <p className="text-sm text-muted-foreground">{stage.desc}</p>
-                <div className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-primary/30 p-4 text-center">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                  <p className="text-xs font-medium">Interactive simulation coming soon</p>
-                </div>
+                {stage.id === "stage-2" ? (
+                  <div className="flex flex-col items-center gap-2 rounded-xl border-2 border-cta/40 bg-cta/5 p-4 text-center">
+                    <Sparkles className="h-5 w-5 text-cta" />
+                    <p className="text-xs font-bold text-cta">Playable below ↓</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-primary/30 p-4 text-center">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    <p className="text-xs font-medium">Interactive simulation coming soon</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           );
         })}
+      </div>
+
+      <div className="mt-10">
+        <PageHeader
+          title="Stage 2 — Mix Sirap Bandung"
+          description="Run the carnival drink stall! Mix the perfect ratio and serve your customer."
+          icon={<CupSoda className="h-6 w-6" />}
+        />
+        <SirapBandungChallenge />
       </div>
     </div>
   );
