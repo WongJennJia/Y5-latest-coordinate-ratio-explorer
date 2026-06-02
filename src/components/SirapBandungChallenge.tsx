@@ -126,6 +126,7 @@ export function SirapBandungChallenge({ onSolved }: { onSolved?: () => void } = 
         text: "Sedap! Perfect Sirap Bandung — you nailed the golden 2 : 5 ratio! PL6 Achievement Badge unlocked!",
       });
       markComplete("final");
+      onSolved?.();
       const burst = (x: number) =>
         confetti({
           particleCount: 90,
