@@ -77,7 +77,7 @@ function StepperControl({
   );
 }
 
-export function SirapBandungChallenge() {
+export function SirapBandungChallenge({ onSolved }: { onSolved?: () => void } = {}) {
   const { markComplete, isCompleted } = useProgress();
   const [syrup, setSyrup] = useState(1);
   const [milk, setMilk] = useState(1);
@@ -126,6 +126,7 @@ export function SirapBandungChallenge() {
         text: "Sedap! Perfect Sirap Bandung — you nailed the golden 2 : 5 ratio! PL6 Achievement Badge unlocked!",
       });
       markComplete("final");
+      onSolved?.();
       const burst = (x: number) =>
         confetti({
           particleCount: 90,

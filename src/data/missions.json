@@ -151,26 +151,53 @@
     "stages": [
       {
         "id": "stage-1",
-        "name": "Find Gerai Satay",
-        "topic": "Coordinates (7.1)",
+        "name": "Gerai Satay Setup",
+        "topic": "Coordinates (7.1.1)",
         "icon": "MapPin",
-        "desc": "Read the carnival map and locate the satay stall using its coordinate, then calculate the walking distance from the gate."
+        "desc": "Read the carnival map and place the satay stall at the correct coordinate using horizontal and vertical distance."
       },
       {
         "id": "stage-2",
         "name": "Mix Sirap Bandung",
-        "topic": "Ratio (7.2)",
+        "topic": "Ratio (7.2.1)",
         "icon": "CupSoda",
-        "desc": "Use the ratio sliders to mix syrup and milk in the correct ratio for a perfect batch of Sirap Bandung."
+        "desc": "Use the ratio sliders to mix syrup and milk in the correct 2 : 5 ratio for a perfect batch of Sirap Bandung."
       },
       {
         "id": "stage-3",
-        "name": "Scale the Kuih Recipe",
-        "topic": "Proportion (7.3)",
+        "name": "Pesta Ria Feast",
+        "topic": "Proportion (7.3.1)",
         "icon": "ChefHat",
-        "desc": "The kuih stall got a big order! Use proportion to scale the recipe and find the unknown quantities."
+        "desc": "A crowd of teachers arrived! Use the unitary method to scale the recipe up for 20 guests."
       }
-    ]
+    ],
+    "games": {
+      "stage1": {
+        "title": "Gerai Satay Setup",
+        "standard": "DSKP 7.1.1 — Horizontal & vertical distance",
+        "gridSize": 5,
+        "originLabel": "Pintu Gerbang (Main Gate)",
+        "reference": { "x": 1, "y": 2, "label": "Pentas Utama (Main Stage)" },
+        "offsetRight": 3,
+        "offsetUp": 2,
+        "mission": "The Gerai Satay must be placed 3 units horizontally to the right and 2 units vertically up from the Pentas Utama (1, 2). Click on the correct coordinate!",
+        "successTemplate": "Tepat sekali! Coordinate ({x},{y}) is correct. Horizontal distance = {dx} units, Vertical distance = {dy} units!"
+      },
+      "stage3": {
+        "title": "Pesta Ria Feast",
+        "standard": "DSKP 7.3.1 — Proportion (Unitary Method)",
+        "scenario": "A massive crowd of teachers just arrived at the booth! The standard recipe serves 4 people. Scale it up for 20 unexpected guests using proportion.",
+        "basePax": 4,
+        "targetPax": 20,
+        "ingredients": [
+          { "key": "syrup", "label": "Rose Syrup (Sirap)", "unit": "ml", "base": 200, "accent": "bg-pink-100 text-pink-600" },
+          { "key": "milk", "label": "Condensed Milk (Susu)", "unit": "ml", "base": 500, "accent": "bg-amber-100 text-amber-700" }
+        ],
+        "hint": "Tip: 20 guests is 5 times more than 4 guests! Multiply both ingredients by 5.",
+        "successTitle": "Carnival Tycoon Master: PL6 Unlocked!",
+        "successBody": "You scaled the recipe perfectly using the unitary method. The whole staffroom is sipping your Sirap Bandung!"
+      }
+    }
   },
   "reflection": {
     "strengths": [
