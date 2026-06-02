@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Trophy, MapPin, CupSoda, ChefHat, Lock, PartyPopper, Sparkles } from "lucide-react";
 
 import { PageHeader } from "@/components/PageHeader";
+import { SirapBandungChallenge } from "@/components/SirapBandungChallenge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
