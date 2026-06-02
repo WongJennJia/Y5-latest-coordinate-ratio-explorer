@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Trophy, MapPin, CupSoda, ChefHat, Lock, PartyPopper, Sparkles } from "lucide-react";
+import { Trophy, MapPin, CupSoda, ChefHat, Lock, PartyPopper, Sparkles, CheckCircle2, Circle } from "lucide-react";
 
 import { PageHeader } from "@/components/PageHeader";
+import { GeraiSatayChallenge } from "@/components/GeraiSatayChallenge";
 import { SirapBandungChallenge } from "@/components/SirapBandungChallenge";
+import { PestaRiaFeast } from "@/components/PestaRiaFeast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,6 +31,8 @@ function FinalChallengePage() {
   const unlocked = isUnlocked("final");
   const fc = missionsData.finalChallenge;
 
+  const [currentActiveStage, setCurrentActiveStage] = useState<1 | 2 | 3>(1);
+
   if (!unlocked) {
     return (
       <div className="mx-auto flex max-w-md flex-col items-center gap-4 py-24 text-center">
@@ -45,12 +50,21 @@ function FinalChallengePage() {
     );
   }
 
+  const advance = (to: 2 | 3) => {
+    setCurrentActiveStage(to);
+    if (typeof window !== "undefined") {
+      window.requestAnimationFrame(() =>
+        document.getElementById("active-stage")?.scrollIntoView({ behavior: "smooth", block: "start" }),
+      );
+    }
+  };
+
   return (
     <div className="mx-auto max-w-5xl">
       <section className="relative mb-8 overflow-hidden rounded-3xl bg-gradient-to-br from-cta/15 to-mint-100 p-8 sm:p-10 mint-card-shadow">
         <PartyPopper className="absolute -right-4 -top-4 h-32 w-32 text-cta/20" />
         <Badge className="mb-3 gap-1.5 bg-cta text-cta-foreground">
-          <Sparkles className="h-3.5 w-3.5" /> Final Challenge
+          <Sparkles className="h-3.5 w-3.5" /> The Carnival Tycoon Challenge
         </Badge>
         <h1 className="font-display text-3xl font-extrabold sm:text-4xl">{fc.title}</h1>
         <p className="mt-1 font-display text-lg text-primary">{fc.subtitle}</p>
@@ -59,22 +73,34 @@ function FinalChallengePage() {
 
       <PageHeader
         title="Carnival Stages"
-        description="Three real-world stalls — one for each topic you mastered."
+        description="Advance through three real-world stalls — one for each topic you mastered."
         icon={<Trophy className="h-6 w-6" />}
       />
 
       <div className="grid gap-5 md:grid-cols-3">
         {fc.stages.map((stage, i) => {
+          const stageNum = (i + 1) as 1 | 2 | 3;
           const Icon = ICONS[stage.icon as keyof typeof ICONS] ?? MapPin;
+          const isActive = currentActiveStage === stageNum;
+          const isDone = currentActiveStage > stageNum;
           return (
-            <Card key={stage.id} className="flex h-full flex-col mint-card-shadow">
+            <Card
+              key={stage.id}
+              className={`flex h-full flex-col mint-card-shadow transition-colors ${
+                isActive ? "border-cta ring-2 ring-cta/30" : isDone ? "border-primary/40" : "opacity-70"
+              }`}
+            >
               <CardHeader>
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-mint-100 text-primary">
+                  <span
+                    className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                      isActive ? "bg-cta/15 text-cta" : "bg-mint-100 text-primary"
+                    }`}
+                  >
                     <Icon className="h-6 w-6" />
                   </span>
                   <span className="font-display text-sm font-bold text-muted-foreground">
-                    Stage {i + 1}
+                    Stage {stageNum}
                   </span>
                 </div>
                 <CardTitle className="text-lg">{stage.name}</CardTitle>
@@ -84,30 +110,68 @@ function FinalChallengePage() {
               </CardHeader>
               <CardContent className="flex flex-1 flex-col justify-between gap-4">
                 <p className="text-sm text-muted-foreground">{stage.desc}</p>
-                {stage.id === "stage-2" ? (
-                  <div className="flex flex-col items-center gap-2 rounded-xl border-2 border-cta/40 bg-cta/5 p-4 text-center">
-                    <Sparkles className="h-5 w-5 text-cta" />
-                    <p className="text-xs font-bold text-cta">Playable below ↓</p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-primary/30 p-4 text-center">
-                    <Sparkles className="h-5 w-5 text-primary" />
-                    <p className="text-xs font-medium">Interactive simulation coming soon</p>
-                  </div>
-                )}
+                <div
+                  className={`flex items-center gap-2 rounded-xl border-2 p-3 text-xs font-bold ${
+                    isDone
+                      ? "border-primary/40 bg-mint-100 text-primary"
+                      : isActive
+                        ? "border-cta/40 bg-cta/5 text-cta"
+                        : "border-dashed border-muted-foreground/30 text-muted-foreground"
+                  }`}
+                >
+                  {isDone ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4" /> Completed
+                    </>
+                  ) : isActive ? (
+                    <>
+                      <Sparkles className="h-4 w-4" /> Playing now ↓
+                    </>
+                  ) : (
+                    <>
+                      <Circle className="h-4 w-4" /> Locked
+                    </>
+                  )}
+                </div>
               </CardContent>
             </Card>
           );
         })}
       </div>
 
-      <div className="mt-10">
-        <PageHeader
-          title="Stage 2 — Mix Sirap Bandung"
-          description="Run the carnival drink stall! Mix the perfect ratio and serve your customer."
-          icon={<CupSoda className="h-6 w-6" />}
-        />
-        <SirapBandungChallenge />
+      <div id="active-stage" className="mt-10 scroll-mt-6">
+        {currentActiveStage === 1 && (
+          <>
+            <PageHeader
+              title="Stage 1 — Gerai Satay Setup"
+              description="Place the satay stall at the perfect spot on the carnival map."
+              icon={<MapPin className="h-6 w-6" />}
+            />
+            <GeraiSatayChallenge onSolved={() => advance(2)} />
+          </>
+        )}
+
+        {currentActiveStage === 2 && (
+          <>
+            <PageHeader
+              title="Stage 2 — Mix Sirap Bandung"
+              description="Run the carnival drink stall! Mix the perfect ratio and serve your customer."
+              icon={<CupSoda className="h-6 w-6" />}
+            />
+            <SirapBandungChallenge onSolved={() => advance(3)} />
+          </>
+        )}
+
+        {currentActiveStage === 3 && (
+          <>
+            <PageHeader
+              title="Stage 3 — Pesta Ria Feast"
+              description="A crowd of teachers arrived! Scale the recipe up with proportion for the win."
+              icon={<ChefHat className="h-6 w-6" />}
+            />
+            <PestaRiaFeast />
+          </>
+        )}
       </div>
     </div>
   );
