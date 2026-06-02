@@ -77,7 +77,7 @@ function StepperControl({
   );
 }
 
-export function SirapBandungChallenge() {
+export function SirapBandungChallenge({ onSolved }: { onSolved?: () => void } = {}) {
   const { markComplete, isCompleted } = useProgress();
   const [syrup, setSyrup] = useState(1);
   const [milk, setMilk] = useState(1);
