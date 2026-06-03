@@ -8,10 +8,9 @@ import { useProgress } from "@/lib/progress-context";
 import missionsData from "@/data/missions.json";
 
 const MAX = 10;
-const target = missionsData.missions.find((m) => m.id === "ratio")!.learn.target as {
-  eggs: number;
-  cucumbers: number;
-};
+const target = (missionsData.missions.find((m) => m.id === "ratio")!.learn as {
+  target: { eggs: number; cucumbers: number };
+}).target;
 
 const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
 

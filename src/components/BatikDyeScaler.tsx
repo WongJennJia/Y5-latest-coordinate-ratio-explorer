@@ -10,13 +10,15 @@ import { Badge } from "@/components/ui/badge";
 import { useProgress } from "@/lib/progress-context";
 import missionsData from "@/data/missions.json";
 
-const cfg = missionsData.missions.find((m) => m.id === "proportion")!.learn.scaler as {
-  refMeters: number;
-  refPrice: number;
-  queryMeters: number;
-  unitPrice: number;
-  finalPrice: number;
-};
+const cfg = (missionsData.missions.find((m) => m.id === "proportion")!.learn as {
+  scaler: {
+    refMeters: number;
+    refPrice: number;
+    queryMeters: number;
+    unitPrice: number;
+    finalPrice: number;
+  };
+}).scaler;
 
 export function BatikDyeScaler() {
   const { markComplete, isCompleted } = useProgress();
