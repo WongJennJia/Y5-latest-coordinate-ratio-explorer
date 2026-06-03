@@ -17,10 +17,12 @@ export function MissionContent({
   missionId,
   icon,
   nextTo,
+  learnTool,
 }: {
   missionId: MissionId;
   icon: React.ReactNode;
   nextTo: string;
+  learnTool?: React.ReactNode;
 }) {
   const mission = missionsData.missions.find((m) => m.id === missionId) as Mission;
   const { isUnlocked, isCompleted, markComplete } = useProgress();
