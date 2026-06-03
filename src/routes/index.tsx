@@ -85,73 +85,115 @@ function HomePage() {
         </CardContent>
       </Card>
 
-      {/* Roadmap */}
-      <h2 className="mb-5 font-display text-2xl font-bold">Adventure Roadmap</h2>
-      <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {missionsData.milestones.map((m, i) => {
-          const Icon = ICONS[m.icon as keyof typeof ICONS];
-          const unlocked = isUnlocked(m.id as MissionId);
-          const done = isCompleted(m.id as MissionId);
-          return (
-            <div key={m.id} className="relative">
-              <Card
-                className={`group h-full overflow-hidden transition-all ${
-                  unlocked ? "hover:-translate-y-1 mint-card-shadow" : "opacity-70"
-                }`}
+      {/* Roadmap timeline */}
+      <h2 className="mb-8 font-display text-2xl font-bold">Adventure Roadmap</h2>
+      <div className="relative">
+        {/* center line */}
+        <div className="absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-200 via-blue-200 via-violet-200 to-orange-200 hidden lg:block" />
+
+        <div className="space-y-8 lg:space-y-2">
+          {missionsData.milestones.map((m, i) => {
+            const Icon = ICONS[m.icon as keyof typeof ICONS];
+            const unlocked = isUnlocked(m.id as MissionId);
+            const done = isCompleted(m.id as MissionId);
+            const active = unlocked && !done;
+            const isLeft = i % 2 === 0;
+            const points = POINTS[i] ?? 100;
+
+            return (
+              <div
+                key={m.id}
+                className={`relative ${isLeft ? "lg:pr-[52%]" : "lg:pl-[52%]"}`}
               >
-                <CardContent className="flex h-full flex-col gap-4 p-6">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
-                        done
-                          ? "bg-primary text-primary-foreground"
-                          : unlocked
-                            ? "bg-mint-100 text-primary"
-                            : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {unlocked ? <Icon className="h-6 w-6" /> : <Lock className="h-5 w-5" />}
-                    </span>
-                    <span className="font-display text-sm font-bold text-muted-foreground">
-                      0{i + 1}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-display text-lg font-bold">{m.label}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {done ? "Completed" : unlocked ? "Ready to start" : "Locked"}
-                    </p>
-                  </div>
-                  {unlocked ? (
-                    <Button
-                      asChild
-                      variant={done ? "secondary" : "default"}
-                      size="sm"
-                      className="w-full"
-                    >
-                      <Link to={m.to} className="gap-1.5">
-                        {done ? (
-                          <>
-                            <CheckCircle2 className="h-4 w-4" /> Review
-                          </>
-                        ) : (
-                          <>
-                            Start <ArrowRight className="h-4 w-4" />
-                          </>
-                        )}
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button disabled size="sm" variant="secondary" className="w-full gap-1.5">
-                      <Lock className="h-3.5 w-3.5" /> Locked
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          );
-        })}
+                {/* node */}
+                <div className="absolute left-1/2 top-6 z-10 hidden -translate-x-1/2 lg:block">
+                  <span
+                    className={`flex h-11 w-11 items-center justify-center rounded-full border-4 border-background font-display text-sm font-extrabold ${
+                      done
+                        ? "bg-primary text-primary-foreground"
+                        : active
+                          ? "bg-cta text-cta-foreground ring-4 ring-cta/30 animate-pulse"
+                          : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {done ? (
+                      <CheckCircle2 className="h-5 w-5" />
+                    ) : !unlocked ? (
+                      <Lock className="h-4 w-4" />
+                    ) : (
+                      i + 1
+                    )}
+                  </span>
+                </div>
+
+                <Card
+                  className={`overflow-hidden transition-all ${
+                    unlocked ? "mint-card-shadow hover:-translate-y-1" : "opacity-70"
+                  }`}
+                >
+                  <CardContent className="flex flex-col gap-4 p-6">
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
+                          done
+                            ? "bg-primary text-primary-foreground"
+                            : unlocked
+                              ? "bg-mint-100 text-primary"
+                              : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        {unlocked ? <Icon className="h-6 w-6" /> : <Lock className="h-5 w-5" />}
+                      </span>
+                      <Badge
+                        variant={done ? "default" : active ? "secondary" : "outline"}
+                        className={done ? "bg-primary text-primary-foreground" : ""}
+                      >
+                        {done ? "Completed" : active ? "Active" : "Locked"}
+                      </Badge>
+                    </div>
+                    <div>
+                      <p className="font-display text-lg font-bold">{m.label}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Mission {i + 1} · {points} points
+                      </p>
+                    </div>
+                    {unlocked ? (
+                      <Button asChild variant={done ? "secondary" : "default"} size="sm" className="w-full sm:w-auto">
+                        <Link to={m.to} className="gap-1.5">
+                          {done ? (
+                            <>
+                              <CheckCircle2 className="h-4 w-4" /> Review
+                            </>
+                          ) : (
+                            <>
+                              Start <ArrowRight className="h-4 w-4" />
+                            </>
+                          )}
+                        </Link>
+                      </Button>
+                    ) : (
+                      <Button disabled size="sm" variant="secondary" className="w-full gap-1.5 sm:w-auto">
+                        <Lock className="h-3.5 w-3.5" /> Locked
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* DSKP footer */}
+      <div className="mt-12 rounded-2xl border border-primary/15 bg-mint-50/60 p-6 text-center">
+        <p className="text-sm font-semibold text-primary">{missionsData.meta.curriculum}</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Aligned to DSKP KSSR Mathematics Year 5 — Topics 7.1 Coordinates, 7.2 Ratio, 7.3 Proportion
+          &amp; 7.4 Problem Solving. Course {missionsData.meta.course}.
+        </p>
       </div>
     </div>
   );
 }
+
+const POINTS = [100, 150, 200, 300];
