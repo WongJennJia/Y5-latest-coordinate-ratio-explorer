@@ -124,7 +124,7 @@ export function NasiLemakRatioMaster() {
             value={eggs}
             setValue={(v) => {
               setEggs(v);
-              setValidated(false);
+              setStatus("idle");
             }}
             color="bg-amber-100 text-amber-700"
             icon={<Egg className="h-4 w-4 text-amber-600" />}
@@ -135,7 +135,7 @@ export function NasiLemakRatioMaster() {
             value={cucumbers}
             setValue={(v) => {
               setCucumbers(v);
-              setValidated(false);
+              setStatus("idle");
             }}
             color="bg-emerald-100 text-emerald-700"
             icon={<Salad className="h-4 w-4 text-emerald-600" />}
@@ -185,12 +185,12 @@ export function NasiLemakRatioMaster() {
               <RotateCcw className="h-4 w-4" /> Reset
             </Button>
           </div>
-          {validated && matchesTarget && (
+          {status === "ok" && (
             <p className="animate-fade-in mt-3 flex items-center justify-center gap-1.5 font-semibold text-primary">
               <CheckCircle2 className="h-4 w-4" /> Perfect ratio! Mission marked complete.
             </p>
           )}
-          {validated === false && !matchesTarget && eggs >= 0 && (
+          {status === "fail" && (
             <p className="mt-3 text-muted-foreground">
               Adjust the plates until the simplest form matches the target ratio.
             </p>
