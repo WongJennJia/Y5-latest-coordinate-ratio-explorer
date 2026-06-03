@@ -56,35 +56,82 @@ function GettingStartedPage() {
           </CardContent>
         </Card>
 
-        {/* H5P placeholder */}
-        <Card className="border-dashed bg-mint-50/40">
+        {/* AI Study Companion */}
+        <Card className="overflow-hidden border-2 border-cta/30 mint-card-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Puzzle className="h-5 w-5 text-primary" /> Interactive Warm-up
-              <Badge variant="secondary" className="ml-auto">
-                H5P
-              </Badge>
+              <Bot className="h-5 w-5 text-cta" /> 🤖 AI Study Companion (Pembantu Belajar AI)
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="group relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-2xl border-2 border-dashed border-primary/30 bg-card text-center">
-              <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.4s_infinite] bg-gradient-to-r from-transparent via-mint-100/60 to-transparent" />
-              <Loader2 className="h-9 w-9 animate-spin text-primary" />
-              <div className="relative">
-                <p className="font-display text-lg font-bold">H5P Module Loading…</p>
-                <p className="text-sm text-muted-foreground">
-                  An interactive drag-and-drop activity will appear here.
-                </p>
-              </div>
+          <CardContent className="flex h-full flex-col gap-5">
+            <div className="rounded-2xl bg-gradient-to-br from-cta/10 to-mint-100/40 p-6">
+              <p className="text-sm text-foreground/80">
+                Have questions about coordinates or ratios? Chat with our smart AI assistant powered
+                by Google NotebookLM to guide your adventure!
+              </p>
             </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              Placeholder for an embedded H5P interactive content module (coming in the next build).
-            </p>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Ask about any DSKP topic in your own words.</li>
+              <li>• Get child-friendly explanations and examples.</li>
+              <li>• Review before tackling the Practice quizzes.</li>
+            </ul>
+            <div className="mt-auto">
+              <Button
+                asChild
+                className="group bg-cta text-cta-foreground cta-shadow hover:bg-cta/90"
+              >
+                <a
+                  href="https://notebooklm.google.com/notebook/615fc237-4016-4367-bf4e-24efcba7286d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gap-1.5"
+                >
+                  Open AI Companion
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      <style>{`@keyframes shimmer { 100% { transform: translateX(100%); } }`}</style>
+      {/* Learning Tips */}
+      <section className="mt-10">
+        <h2 className="mb-5 font-display text-2xl font-bold">
+          Learning Tips: How to make the most of Math Explorer
+        </h2>
+        <div className="grid gap-5 md:grid-cols-3">
+          {TIPS.map((tip) => (
+            <Card key={tip.title} className="mint-card-shadow">
+              <CardContent className="flex flex-col gap-3 p-6">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-mint-100 text-primary">
+                  {tip.icon}
+                </span>
+                <p className="font-display text-lg font-bold">{tip.title}</p>
+                <p className="text-sm text-muted-foreground">{tip.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
+
+const TIPS = [
+  {
+    title: "1. Follow the Order",
+    desc: "Complete missions in sequence. Each mission builds on the previous one.",
+    icon: <ListOrdered className="h-5 w-5" />,
+  },
+  {
+    title: "2. Learn → Explore → Practice",
+    desc: "Each mission has three phases. Don't skip ahead!",
+    icon: <Layers className="h-5 w-5" />,
+  },
+  {
+    title: "3. Ask Questions",
+    desc: "If you're stuck, review the learning materials or ask your teacher for help.",
+    icon: <MessageCircleQuestion className="h-5 w-5" />,
+  },
+];
