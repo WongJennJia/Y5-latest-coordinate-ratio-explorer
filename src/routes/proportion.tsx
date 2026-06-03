@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Percent } from "lucide-react";
 import { MissionContent } from "@/components/MissionContent";
+import { BatikDyeScaler } from "@/components/BatikDyeScaler";
 
 export const Route = createFileRoute("/proportion")({
   head: () => ({
@@ -13,7 +14,12 @@ export const Route = createFileRoute("/proportion")({
   }),
   component: () => (
     <div className="mx-auto max-w-5xl">
-      <MissionContent missionId="proportion" icon={<Percent className="h-6 w-6" />} nextTo="/final-challenge" />
+      <MissionContent
+        missionId="proportion"
+        icon={<Percent className="h-6 w-6" />}
+        nextTo="/final-challenge"
+        learnTool={<BatikDyeScaler />}
+      />
     </div>
   ),
 });
