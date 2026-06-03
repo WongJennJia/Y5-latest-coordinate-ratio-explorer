@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Scale } from "lucide-react";
 import { MissionContent } from "@/components/MissionContent";
+import { NasiLemakRatioMaster } from "@/components/NasiLemakRatioMaster";
 
 export const Route = createFileRoute("/ratio")({
   head: () => ({
@@ -13,7 +14,12 @@ export const Route = createFileRoute("/ratio")({
   }),
   component: () => (
     <div className="mx-auto max-w-5xl">
-      <MissionContent missionId="ratio" icon={<Scale className="h-6 w-6" />} nextTo="/proportion" />
+      <MissionContent
+        missionId="ratio"
+        icon={<Scale className="h-6 w-6" />}
+        nextTo="/proportion"
+        learnTool={<NasiLemakRatioMaster />}
+      />
     </div>
   ),
 });

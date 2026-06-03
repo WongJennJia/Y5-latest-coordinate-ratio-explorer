@@ -17,10 +17,12 @@ export function MissionContent({
   missionId,
   icon,
   nextTo,
+  learnTool,
 }: {
   missionId: MissionId;
   icon: React.ReactNode;
   nextTo: string;
+  learnTool?: React.ReactNode;
 }) {
   const mission = missionsData.missions.find((m) => m.id === missionId) as Mission;
   const { isUnlocked, isCompleted, markComplete } = useProgress();
@@ -86,25 +88,25 @@ export function MissionContent({
         </TabsList>
 
         {/* LEARN */}
-        <TabsContent value="learn" className="mt-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="mint-card-shadow">
-              <CardHeader>
-                <CardTitle>Key Idea</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">{mission.learn.intro}</p>
-                <ul className="space-y-2.5">
-                  {mission.learn.concepts.map((c, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span className="text-sm">{c}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+        <TabsContent value="learn" className="mt-6 space-y-6">
+          <Card className="mint-card-shadow">
+            <CardHeader>
+              <CardTitle>Key Idea</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground">{mission.learn.intro}</p>
+              <ul className="grid gap-2.5 sm:grid-cols-2">
+                {mission.learn.concepts.map((c, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span className="text-sm">{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
 
+          {learnTool ?? (
             <Card className="border-dashed bg-mint-50/40">
               <CardHeader>
                 <CardTitle className="text-base">Interactive Helper</CardTitle>
@@ -117,7 +119,7 @@ export function MissionContent({
                 </div>
               </CardContent>
             </Card>
-          </div>
+          )}
         </TabsContent>
 
         {/* EXPLORE */}

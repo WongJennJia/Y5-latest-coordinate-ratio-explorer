@@ -7,7 +7,9 @@
     "curriculum": "DSKP KSSR Mathematics Year 5",
     "videoId": "byjmR7JBXKc",
     "developer": "Your Name",
-    "institution": "Institut Pendidikan Guru (IPG)"
+    "institution": "Institut Pendidikan Guru (IPG)",
+    "academicYear": "2025 / 2026",
+    "description": "An interactive, mission-based multimedia learning resource that teaches Year 5 pupils coordinates, ratio and proportion through gamified Malaysian real-world contexts."
   },
   "milestones": [
     { "id": "coordinates", "label": "Coordinates", "icon": "Grid3x3", "to": "/coordinates" },
@@ -78,7 +80,8 @@
           "Part to Whole — compares one part with the total (syrup : total = 2 : 7).",
           "Whole to Part — compares the total with one part (total : milk = 7 : 5)."
         ],
-        "interactivePlaceholder": "Interactive ratio bar/mixer will be embedded here."
+        "interactivePlaceholder": "Interactive ratio bar/mixer will be embedded here.",
+        "target": { "eggs": 2, "cucumbers": 3 }
       },
       "explore": {
         "tool": "GeoGebra Classroom",
@@ -120,7 +123,8 @@
           "Multiply or divide both parts by the same number to keep it equal.",
           "Use cross-relationships to find an unknown value."
         ],
-        "interactivePlaceholder": "Interactive proportion solver will be embedded here."
+        "interactivePlaceholder": "Interactive proportion solver will be embedded here.",
+        "scaler": { "refMeters": 3, "refPrice": 45, "queryMeters": 7, "unitPrice": 15, "finalPrice": 105 }
       },
       "explore": {
         "tool": "GeoGebra Classroom",
@@ -219,6 +223,8 @@
   "dskp": [
     { "topic": "7.1 Coordinates", "standard": "7.1.1", "desc": "Determine horizontal and vertical distance between two coordinates." },
     { "topic": "7.2 Ratio", "standard": "7.2.1", "desc": "Represent ratio: Part to Part, Part to Whole, Whole to Part." },
-    { "topic": "7.3 Proportion", "standard": "7.3.1", "desc": "Determine unknown value using proportion." }
-  ]
+    { "topic": "7.3 Proportion", "standard": "7.3.1", "desc": "Determine unknown value using proportion." },
+    { "topic": "7.4 Problem Solving", "standard": "7.4.1", "desc": "Solve daily-life problems involving coordinates, ratio and proportion." }
+  ],
+  "techStack": ["React", "TypeScript", "Tailwind CSS", "Lucide", "shadcn/ui", "TanStack Router"]
 }
