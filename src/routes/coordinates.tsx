@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Grid3x3 } from "lucide-react";
 import { MissionContent } from "@/components/MissionContent";
+import { CoordinateGridExplorer } from "@/components/CoordinateGridExplorer";
 
 export const Route = createFileRoute("/coordinates")({
   head: () => ({
@@ -13,7 +14,12 @@ export const Route = createFileRoute("/coordinates")({
   }),
   component: () => (
     <div className="mx-auto max-w-5xl">
-      <MissionContent missionId="coordinates" icon={<Grid3x3 className="h-6 w-6" />} nextTo="/ratio" />
+      <MissionContent
+        missionId="coordinates"
+        icon={<Grid3x3 className="h-6 w-6" />}
+        nextTo="/ratio"
+        learnTool={<CoordinateGridExplorer />}
+      />
     </div>
   ),
 });
