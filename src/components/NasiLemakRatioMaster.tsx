@@ -24,7 +24,7 @@ export function NasiLemakRatioMaster() {
   const { markComplete, isCompleted } = useProgress();
   const [eggs, setEggs] = useState(2);
   const [cucumbers, setCucumbers] = useState(3);
-  const [validated, setValidated] = useState(false);
+  const [status, setStatus] = useState<"idle" | "ok" | "fail">("idle");
   const done = isCompleted("ratio");
 
   const total = eggs + cucumbers;
@@ -37,17 +37,17 @@ export function NasiLemakRatioMaster() {
 
   const validate = () => {
     if (matchesTarget) {
-      setValidated(true);
+      setStatus("ok");
       markComplete("ratio");
     } else {
-      setValidated(false);
+      setStatus("fail");
     }
   };
 
   const reset = () => {
     setEggs(2);
     setCucumbers(3);
-    setValidated(false);
+    setStatus("idle");
   };
 
   const Counter = ({
