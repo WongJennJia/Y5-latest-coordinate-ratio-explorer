@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Palette, CheckCircle2, RotateCcw, ArrowRight, Tag, HelpCircle } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +28,9 @@ export function BatikDyeScaler() {
   const unitCorrect = Number(unit) === cfg.unitPrice;
   const finalCorrect = unitCorrect && Number(final) === cfg.finalPrice;
 
-  if (finalCorrect && !done) markComplete("proportion");
+  useEffect(() => {
+    if (finalCorrect && !done) markComplete("proportion");
+  }, [finalCorrect, done, markComplete]);
 
   const reset = () => {
     setUnit("");
