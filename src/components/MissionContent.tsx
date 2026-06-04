@@ -187,12 +187,14 @@ function PracticeQuiz({
   onComplete,
   done,
   nextTo,
+  onBackToExplore,
 }: {
   questions: { q: string; options: string[]; answer: number }[];
   intro: string;
   onComplete: () => void;
   done: boolean;
   nextTo: string;
+  onBackToExplore: () => void;
 }) {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -200,6 +202,18 @@ function PracticeQuiz({
   const allAnswered = questions.every((_, i) => answers[i] !== undefined);
   const score = questions.filter((q, i) => answers[i] === q.answer).length;
   const passed = submitted && score === questions.length;
+  const failed = submitted && score < questions.length;
+
+  const handleResetQuiz = () => {
+    setSubmitted(false);
+    setAnswers({});
+  };
+
+  // Auto-lock progress permanently when the student gets a perfect score.
+  useEffect(() => {
+    if (passed) onComplete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passed]);
 
   return (
     <Card className="mint-card-shadow">
@@ -243,7 +257,19 @@ function PracticeQuiz({
           </div>
         ))}
 
-        <div className="flex flex-wrap items-center gap-3 pt-2">
+        {/* Diagnostic hint box — only shown when score is not perfect */}
+        {failed && (
+          <div className="flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
+            <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+            <p className="text-sm">
+              💡 <span className="font-semibold">Explorer Tip:</span> Remember that 'Part to Whole'
+              (Bahagian kepada Keseluruhan) compares the specific items against the TOTAL combined
+              sum of everything in the container! Let's sum them up and try once more!
+            </p>
+          </div>
+        )}
+
+        <div className="pt-2">
           {!submitted ? (
             <Button
               disabled={!allAnswered}
@@ -253,41 +279,44 @@ function PracticeQuiz({
               Check Answers
             </Button>
           ) : (
-            <>
-              <Badge variant={passed ? "default" : "secondary"} className="py-1.5 text-sm">
-                Score: {score}/{questions.length}
-              </Badge>
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge variant={passed ? "default" : "secondary"} className="py-1.5 text-sm">
+                  Score: {score}/{questions.length}
+                </Badge>
+                {done && (
+                  <Badge className="gap-1 bg-primary text-primary-foreground">
+                    <CheckCircle2 className="h-3.5 w-3.5" /> Saved
+                  </Badge>
+                )}
+              </div>
+
               {passed ? (
-                <>
+                <div className="flex justify-end">
                   <Button
-                    onClick={onComplete}
-                    className="bg-cta text-cta-foreground cta-shadow hover:bg-cta/90"
+                    asChild
+                    className="animate-bounce rounded-xl bg-primary px-6 font-bold text-primary-foreground shadow-md hover:bg-primary/90"
                   >
-                    Mark Mission Complete
-                  </Button>
-                  <Button asChild variant="secondary">
                     <Link to={nextTo} className="gap-1.5">
-                      Next Mission <ArrowRight className="h-4 w-4" />
+                      Fantastic Job! Go to Next Mission <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
-                </>
+                </div>
               ) : (
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setSubmitted(false);
-                    setAnswers({});
-                  }}
-                >
-                  Try Again
-                </Button>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <Button
+                    variant="ghost"
+                    className="gap-2 text-muted-foreground"
+                    onClick={onBackToExplore}
+                  >
+                    <ArrowLeft className="h-4 w-4" /> Back to Explore Simulation
+                  </Button>
+                  <Button variant="outline" className="rounded-xl" onClick={handleResetQuiz}>
+                    🔄 Reset &amp; Rethink Questions
+                  </Button>
+                </div>
               )}
-              {done && (
-                <Badge className="gap-1 bg-primary text-primary-foreground">
-                  <CheckCircle2 className="h-3.5 w-3.5" /> Saved
-                </Badge>
-              )}
-            </>
+            </div>
           )}
         </div>
       </CardContent>
