@@ -4,7 +4,7 @@ import { Rocket, PlayCircle, BookOpen, Bot, ArrowRight, ListOrdered, Layers, Mes
 import { PageHeader } from "@/components/PageHeader";
 import { ResponsiveIframe } from "@/components/ResponsiveIframe";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import missionsData from "@/data/missions.json";
 
 export const Route = createFileRoute("/getting-started")({
