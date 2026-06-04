@@ -53,10 +53,10 @@ export function CoordinateGridExplorer() {
       <CardContent className="space-y-5">
         {/* Grid */}
         <div className="flex justify-center">
-          <div className="flex flex-col items-center">
-            <div className="flex">
+          <div className="flex w-full max-w-xl flex-col items-center md:max-w-2xl">
+            <div className="flex w-full">
               {/* Y-axis labels */}
-              <div className="mr-2 flex flex-col justify-between py-[2px] text-xs font-bold text-primary/70">
+              <div className="mr-2 flex flex-col justify-between py-[2px] text-sm font-extrabold text-primary sm:text-base">
                 {[...VALUES].reverse().map((v) => (
                   <span key={v} className="flex h-0 items-center">
                     {v}
@@ -65,7 +65,8 @@ export function CoordinateGridExplorer() {
               </div>
 
               {/* Plot area */}
-              <div className="relative aspect-square w-full max-w-sm rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-mint-50 to-mint-100/40 p-1">
+              <div className="relative aspect-square w-full rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-mint-50 to-mint-100/40 p-2">
+
                 {/* grid lines */}
                 <div className="absolute inset-1 grid" style={{ gridTemplateColumns: `repeat(${MAX}, 1fr)`, gridTemplateRows: `repeat(${MAX}, 1fr)` }}>
                   {Array.from({ length: MAX * MAX }).map((_, i) => (
