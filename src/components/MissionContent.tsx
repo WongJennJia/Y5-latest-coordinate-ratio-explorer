@@ -146,6 +146,23 @@ export function MissionContent({
               <ResponsiveIframe src={mission.explore.embedUrl} title={`${mission.title} — Explore`} />
             </CardContent>
           </Card>
+
+          <div className="mt-6 flex items-center justify-between gap-3">
+            <Button
+              variant="ghost"
+              onClick={() => setActiveTab("learn")}
+              className="gap-1.5"
+            >
+              <ArrowLeft className="h-4 w-4" /> Back to Lesson
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setActiveTab("practice")}
+              className="gap-1.5 bg-mint-100 text-primary hover:bg-mint-100/80"
+            >
+              Next Step: Practice Mission <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </TabsContent>
 
         {/* PRACTICE */}
