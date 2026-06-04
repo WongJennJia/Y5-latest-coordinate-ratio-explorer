@@ -121,6 +121,16 @@ export function MissionContent({
               </CardContent>
             </Card>
           )}
+
+          <div className="flex justify-end pt-2">
+            <Button
+              variant="secondary"
+              onClick={() => setActiveTab("explore")}
+              className="gap-1.5 bg-mint-100 text-primary hover:bg-mint-100/80"
+            >
+              Next Step: Explore Simulation <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </TabsContent>
 
         {/* EXPLORE */}
