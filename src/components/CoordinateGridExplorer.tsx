@@ -128,7 +128,7 @@ export function CoordinateGridExplorer() {
               </div>
             </div>
             {/* X-axis labels */}
-            <div className="mt-2 flex w-full max-w-sm justify-between pl-6 text-xs font-bold text-primary/70">
+            <div className="mt-2 flex w-full justify-between pl-7 text-sm font-extrabold text-primary sm:text-base">
               {VALUES.map((v) => (
                 <span key={v}>{v}</span>
               ))}
