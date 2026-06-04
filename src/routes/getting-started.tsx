@@ -35,9 +35,9 @@ function GettingStartedPage() {
         icon={<Rocket className="h-6 w-6" />}
       />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid items-stretch gap-6 lg:grid-cols-2">
         {/* YouTube */}
-        <Card className="mint-card-shadow">
+        <Card className="flex flex-col mint-card-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PlayCircle className="h-5 w-5 text-primary" /> Introduction Video
