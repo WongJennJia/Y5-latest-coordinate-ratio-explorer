@@ -75,7 +75,7 @@ export function MissionContent({
         ))}
       </div>
 
-      <Tabs defaultValue="learn" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full max-w-lg grid-cols-3">
           <TabsTrigger value="learn" className="gap-1.5">
             <BookOpen className="h-4 w-4" /> Learn
