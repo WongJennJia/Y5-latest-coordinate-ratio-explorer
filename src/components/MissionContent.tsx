@@ -173,15 +173,8 @@ export function MissionContent({
             onComplete={() => markComplete(missionId)}
             done={done}
             nextTo={nextTo}
+            onBackToExplore={() => setActiveTab("explore")}
           />
-
-          <div className="mt-6 flex justify-center">
-            <Button asChild className="gap-1.5 bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
-              <Link to={nextTo}>
-                Mission Complete! Proceed to Next Adventure <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
         </TabsContent>
       </Tabs>
     </div>
