@@ -53,10 +53,10 @@ export function CoordinateGridExplorer() {
       <CardContent className="space-y-5">
         {/* Grid */}
         <div className="flex justify-center">
-          <div className="flex flex-col items-center">
-            <div className="flex">
+          <div className="flex w-full max-w-xl flex-col items-center md:max-w-2xl">
+            <div className="flex w-full">
               {/* Y-axis labels */}
-              <div className="mr-2 flex flex-col justify-between py-[2px] text-xs font-bold text-primary/70">
+              <div className="mr-2 flex flex-col justify-between py-[2px] text-sm font-extrabold text-primary sm:text-base">
                 {[...VALUES].reverse().map((v) => (
                   <span key={v} className="flex h-0 items-center">
                     {v}
@@ -65,7 +65,8 @@ export function CoordinateGridExplorer() {
               </div>
 
               {/* Plot area */}
-              <div className="relative aspect-square w-full max-w-sm rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-mint-50 to-mint-100/40 p-1">
+              <div className="relative aspect-square w-full rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-mint-50 to-mint-100/40 p-2">
+
                 {/* grid lines */}
                 <div className="absolute inset-1 grid" style={{ gridTemplateColumns: `repeat(${MAX}, 1fr)`, gridTemplateRows: `repeat(${MAX}, 1fr)` }}>
                   {Array.from({ length: MAX * MAX }).map((_, i) => (
@@ -108,11 +109,11 @@ export function CoordinateGridExplorer() {
                         type="button"
                         onClick={() => handlePick(x, y)}
                         aria-label={`Plot point ${x}, ${y}`}
-                        className="absolute -translate-x-1/2 translate-y-1/2"
+                        className="absolute flex h-9 w-9 -translate-x-1/2 translate-y-1/2 items-center justify-center"
                         style={{ left: pct(x), bottom: pct(y) }}
                       >
                         <span
-                          className={`flex h-4 w-4 items-center justify-center rounded-full border transition-all ${
+                          className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
                             isA
                               ? "scale-125 border-blue-600 bg-blue-500 ring-4 ring-blue-400/40 animate-pulse"
                               : isB
@@ -127,7 +128,7 @@ export function CoordinateGridExplorer() {
               </div>
             </div>
             {/* X-axis labels */}
-            <div className="mt-2 flex w-full max-w-sm justify-between pl-6 text-xs font-bold text-primary/70">
+            <div className="mt-2 flex w-full justify-between pl-7 text-sm font-extrabold text-primary sm:text-base">
               {VALUES.map((v) => (
                 <span key={v}>{v}</span>
               ))}
