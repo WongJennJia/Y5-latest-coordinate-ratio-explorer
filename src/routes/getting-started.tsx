@@ -111,6 +111,15 @@ function GettingStartedPage() {
           ))}
         </div>
       </section>
+
+      <div className="mt-10 flex justify-center">
+        <Button asChild size="lg" className="gap-2 bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
+          <Link to="/coordinates">
+            Ready to Explore? Start Mission 1: Coordinates Adventure!
+            <ArrowRight className="h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
