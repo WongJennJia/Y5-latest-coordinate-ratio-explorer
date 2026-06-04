@@ -59,13 +59,13 @@ function GettingStartedPage() {
         </Card>
 
         {/* AI Study Companion */}
-        <Card className="overflow-hidden border-2 border-cta/30 mint-card-shadow">
+        <Card className="flex flex-col overflow-hidden border-2 border-cta/30 mint-card-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Bot className="h-5 w-5 text-cta" /> 🤖 AI Study Companion (Pembantu Belajar AI)
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex h-full flex-col gap-5">
+          <CardContent className="flex flex-col justify-between flex-1 gap-5">
             <div className="rounded-2xl bg-gradient-to-br from-cta/10 to-mint-100/40 p-6">
               <p className="text-sm text-foreground/80">
                 Have questions about coordinates or ratios? Chat with our smart AI assistant powered
