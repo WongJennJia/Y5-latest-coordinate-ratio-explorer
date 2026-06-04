@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Compass, ClipboardCheck, CheckCircle2, Sparkles, ArrowRight, Lock } from "lucide-react";
+import { BookOpen, Compass, ClipboardCheck, CheckCircle2, Sparkles, ArrowRight, ArrowLeft, Lock } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
