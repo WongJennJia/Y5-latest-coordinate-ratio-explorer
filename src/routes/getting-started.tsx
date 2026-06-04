@@ -77,7 +77,7 @@ function GettingStartedPage() {
               <li>• Get child-friendly explanations and examples.</li>
               <li>• Review before tackling the Practice quizzes.</li>
             </ul>
-            <div className="mt-auto">
+            <div className="mt-6 pt-2 pb-1">
               <a
                 href="https://notebooklm.google.com/notebook/615fc237-4016-4367-bf4e-24efcba7286d"
                 target="_blank"
