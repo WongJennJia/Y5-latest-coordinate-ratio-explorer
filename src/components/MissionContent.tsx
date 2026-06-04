@@ -28,6 +28,7 @@ export function MissionContent({
   const { isUnlocked, isCompleted, markComplete } = useProgress();
   const unlocked = isUnlocked(missionId);
   const done = isCompleted(missionId);
+  const [activeTab, setActiveTab] = useState("learn");
 
   if (!unlocked) {
     return (
