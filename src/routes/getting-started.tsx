@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Rocket, PlayCircle, BookOpen, Bot, ArrowRight, ListOrdered, Layers, MessageCircleQuestion } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 import { PageHeader } from "@/components/PageHeader";
 import { ResponsiveIframe } from "@/components/ResponsiveIframe";
