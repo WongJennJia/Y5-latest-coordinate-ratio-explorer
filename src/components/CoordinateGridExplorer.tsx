@@ -109,11 +109,11 @@ export function CoordinateGridExplorer() {
                         type="button"
                         onClick={() => handlePick(x, y)}
                         aria-label={`Plot point ${x}, ${y}`}
-                        className="absolute -translate-x-1/2 translate-y-1/2"
+                        className="absolute flex h-9 w-9 -translate-x-1/2 translate-y-1/2 items-center justify-center"
                         style={{ left: pct(x), bottom: pct(y) }}
                       >
                         <span
-                          className={`flex h-4 w-4 items-center justify-center rounded-full border transition-all ${
+                          className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
                             isA
                               ? "scale-125 border-blue-600 bg-blue-500 ring-4 ring-blue-400/40 animate-pulse"
                               : isB
