@@ -76,20 +76,15 @@ function GettingStartedPage() {
               <li>• Review before tackling the Practice quizzes.</li>
             </ul>
             <div className="mt-auto">
-              <Button
-                asChild
-                className="group bg-cta text-cta-foreground cta-shadow hover:bg-cta/90"
+              <a
+                href="https://notebooklm.google.com/notebook/615fc237-4016-4367-bf4e-24efcba7286d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-cta py-6 text-center text-base font-bold text-cta-foreground cta-shadow transition-all hover:bg-cta/90"
               >
-                <a
-                  href="https://notebooklm.google.com/notebook/615fc237-4016-4367-bf4e-24efcba7286d"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="gap-1.5"
-                >
-                  Open AI Companion
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Button>
+                Open AI Companion
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
             </div>
           </CardContent>
         </Card>
