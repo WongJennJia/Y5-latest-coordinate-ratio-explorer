@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Compass, ClipboardCheck, CheckCircle2, Sparkles, ArrowRight, Lock } from "lucide-react";
+import { BookOpen, Compass, ClipboardCheck, CheckCircle2, Sparkles, ArrowRight, ArrowLeft, Lock } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,6 +28,7 @@ export function MissionContent({
   const { isUnlocked, isCompleted, markComplete } = useProgress();
   const unlocked = isUnlocked(missionId);
   const done = isCompleted(missionId);
+  const [activeTab, setActiveTab] = useState("learn");
 
   if (!unlocked) {
     return (
@@ -74,7 +75,7 @@ export function MissionContent({
         ))}
       </div>
 
-      <Tabs defaultValue="learn" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full max-w-lg grid-cols-3">
           <TabsTrigger value="learn" className="gap-1.5">
             <BookOpen className="h-4 w-4" /> Learn
@@ -120,6 +121,16 @@ export function MissionContent({
               </CardContent>
             </Card>
           )}
+
+          <div className="flex justify-end pt-2">
+            <Button
+              variant="secondary"
+              onClick={() => setActiveTab("explore")}
+              className="gap-1.5 bg-mint-100 text-primary hover:bg-mint-100/80"
+            >
+              Next Step: Explore Simulation <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </TabsContent>
 
         {/* EXPLORE */}
@@ -135,6 +146,23 @@ export function MissionContent({
               <ResponsiveIframe src={mission.explore.embedUrl} title={`${mission.title} — Explore`} />
             </CardContent>
           </Card>
+
+          <div className="mt-6 flex items-center justify-between gap-3">
+            <Button
+              variant="ghost"
+              onClick={() => setActiveTab("learn")}
+              className="gap-1.5"
+            >
+              <ArrowLeft className="h-4 w-4" /> Back to Lesson
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setActiveTab("practice")}
+              className="gap-1.5 bg-mint-100 text-primary hover:bg-mint-100/80"
+            >
+              Next Step: Practice Mission <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
         </TabsContent>
 
         {/* PRACTICE */}
@@ -146,6 +174,14 @@ export function MissionContent({
             done={done}
             nextTo={nextTo}
           />
+
+          <div className="mt-6 flex justify-center">
+            <Button asChild className="gap-1.5 bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
+              <Link to={nextTo}>
+                Mission Complete! Proceed to Next Adventure <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

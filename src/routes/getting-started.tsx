@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Rocket, PlayCircle, BookOpen, Bot, ArrowRight, ListOrdered, Layers, MessageCircleQuestion } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 import { PageHeader } from "@/components/PageHeader";
 import { ResponsiveIframe } from "@/components/ResponsiveIframe";
@@ -33,9 +35,9 @@ function GettingStartedPage() {
         icon={<Rocket className="h-6 w-6" />}
       />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid items-stretch gap-6 lg:grid-cols-2">
         {/* YouTube */}
-        <Card className="mint-card-shadow">
+        <Card className="flex flex-col mint-card-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PlayCircle className="h-5 w-5 text-primary" /> Introduction Video
@@ -57,13 +59,13 @@ function GettingStartedPage() {
         </Card>
 
         {/* AI Study Companion */}
-        <Card className="overflow-hidden border-2 border-cta/30 mint-card-shadow">
+        <Card className="flex flex-col overflow-hidden border-2 border-cta/30 mint-card-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Bot className="h-5 w-5 text-cta" /> 🤖 AI Study Companion (Pembantu Belajar AI)
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex h-full flex-col gap-5">
+          <CardContent className="flex flex-col justify-between flex-1 gap-5">
             <div className="rounded-2xl bg-gradient-to-br from-cta/10 to-mint-100/40 p-6">
               <p className="text-sm text-foreground/80">
                 Have questions about coordinates or ratios? Chat with our smart AI assistant powered
@@ -75,7 +77,7 @@ function GettingStartedPage() {
               <li>• Get child-friendly explanations and examples.</li>
               <li>• Review before tackling the Practice quizzes.</li>
             </ul>
-            <div className="mt-auto">
+            <div className="mt-6 pt-2 pb-1">
               <a
                 href="https://notebooklm.google.com/notebook/615fc237-4016-4367-bf4e-24efcba7286d"
                 target="_blank"
@@ -109,6 +111,15 @@ function GettingStartedPage() {
           ))}
         </div>
       </section>
+
+      <div className="mt-10 flex justify-center">
+        <Button asChild size="lg" className="gap-2 bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
+          <Link to="/coordinates">
+            Ready to Explore? Start Mission 1: Coordinates Adventure!
+            <ArrowRight className="h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
