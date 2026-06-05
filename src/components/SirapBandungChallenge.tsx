@@ -279,7 +279,13 @@ export function SirapBandungChallenge({ onSolved }: { onSolved?: () => void } = 
                 style={{
                   height: `${fillPercent}%`,
                   background:
-                    "linear-gradient(to top, #be185d 0%, #ec4899 45%, #f9a8d4 85%, #fbcfe8 100%)",
+                    syrup === 0 && milk === 0
+                      ? "transparent"
+                      : syrup > 0 && milk === 0
+                        ? "linear-gradient(to top, #9d174d 0%, #db2777 100%)"
+                        : milk > 0 && syrup === 0
+                          ? "linear-gradient(to top, #fef08a 10%, #ffffff 100%)"
+                          : `linear-gradient(to top, #be185d 0%, #db2777 ${(1 - milkRatio) * 60}%, #fdf2f8 ${(1 - milkRatio) * 60 + 5}%, #ffffff 100%)`,
                 }}
               >
                 {/* Surface shimmer */}
