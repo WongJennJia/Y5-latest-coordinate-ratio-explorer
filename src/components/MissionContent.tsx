@@ -192,7 +192,9 @@ export function MissionContent({
             done={done}
             nextTo={nextTo}
             onBackToExplore={() => setActiveTab("explore")}
+            hintText={TOPIC_HINTS[missionId] ?? TOPIC_HINTS.ratio}
           />
+
         </TabsContent>
       </Tabs>
     </div>
