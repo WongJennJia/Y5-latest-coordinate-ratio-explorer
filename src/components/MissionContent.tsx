@@ -13,6 +13,24 @@ import missionsData from "@/data/missions.json";
 
 type Mission = (typeof missionsData.missions)[number];
 
+const TOPIC_HINTS: Record<string, string> = {
+  coordinates:
+    "💡 Explorer Tip: Remember that in a coordinate pair (x, y), the first number represents the horizontal position on the x-axis (paksi-x), and the second number represents the vertical position on the y-axis (paksi-y). To calculate the distance between two points on a flat grid line, look at the difference between the changing values! For example, the distance from (1, 3) to (6, 3) is 5 units because only the horizontal position changed.",
+  ratio:
+    "💡 Explorer Tip: A ratio compares parts directly in a specific order. If a question asks for a 'Part to Whole' (Bahagian kepada Keseluruhan) relationship, you must compare the requested item against the TOTAL combined sum of all items in the set rather than just the other item!",
+  proportion:
+    "💡 Explorer Tip: Proportion represents equivalent ratios (Kadar yang sama). To check if two separate relationships form a proper proportion, verify if they scale up or down by the exact same multiplier. For example, a base ratio of 1:4 scaled up uniformly by a factor of 2 becomes 2:8.",
+};
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export function MissionContent({
   missionId,
   icon,
