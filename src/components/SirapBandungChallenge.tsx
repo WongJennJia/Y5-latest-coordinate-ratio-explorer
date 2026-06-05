@@ -86,6 +86,7 @@ export function SirapBandungChallenge({ onSolved }: { onSolved?: () => void } = 
   const [served, setServed] = useState(isCompleted("final"));
 
   const total = syrup + milk;
+  const milkRatio = total > 0 ? milk / total : 0.5;
   const fillPercent = Math.min(100, (total / (MAX_UNITS * 2)) * 100);
 
   const simplest = useMemo(() => {
