@@ -208,6 +208,7 @@ function PracticeQuiz({
   done,
   nextTo,
   onBackToExplore,
+  hintText,
 }: {
   questions: { q: string; options: string[]; answer: number }[];
   intro: string;
@@ -215,9 +216,14 @@ function PracticeQuiz({
   done: boolean;
   nextTo: string;
   onBackToExplore: () => void;
+  hintText: string;
 }) {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
+  // Per-question display order of option indices (anti-guessing shuffling on retry).
+  const [order, setOrder] = useState<number[][]>(() =>
+    questions.map((q) => q.options.map((_, i) => i)),
+  );
 
   const allAnswered = questions.every((_, i) => answers[i] !== undefined);
   const score = questions.filter((q, i) => answers[i] === q.answer).length;
@@ -227,6 +233,8 @@ function PracticeQuiz({
   const handleResetQuiz = () => {
     setSubmitted(false);
     setAnswers({});
+    // Shuffle option placement so students can't memorize button positions.
+    setOrder(questions.map((q) => shuffle(q.options.map((_, i) => i))));
   };
 
   // Auto-lock progress permanently when the student gets a perfect score.
@@ -234,6 +242,7 @@ function PracticeQuiz({
     if (passed) onComplete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [passed]);
+
 
   return (
     <Card className="mint-card-shadow">
