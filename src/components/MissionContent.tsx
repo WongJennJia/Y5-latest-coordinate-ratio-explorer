@@ -161,7 +161,7 @@ export function MissionContent({
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">{mission.explore.note}</p>
-              <ResponsiveIframe src={mission.explore.embedUrl} title={`${mission.title} — Explore`} />
+              <ResponsiveIframe iframeKey={mission.id} src={mission.explore.embedUrl} title={`${mission.title} — Explore`} />
             </CardContent>
           </Card>
 
