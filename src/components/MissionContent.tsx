@@ -258,7 +258,8 @@ function PracticeQuiz({
               {qi + 1}. {q.q}
             </p>
             <div className="grid gap-2 sm:grid-cols-2">
-              {q.options.map((opt, oi) => {
+              {order[qi].map((oi) => {
+                const opt = q.options[oi];
                 const selected = answers[qi] === oi;
                 const correct = submitted && oi === q.answer;
                 const wrong = submitted && selected && oi !== q.answer;
@@ -288,13 +289,9 @@ function PracticeQuiz({
 
         {/* Diagnostic hint box — only shown when score is not perfect */}
         {failed && (
-          <div className="flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
+          <div className="flex items-start gap-3 rounded-2xl border-2 border-amber-400 bg-amber-50 p-4 text-amber-900">
             <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-            <p className="text-sm">
-              💡 <span className="font-semibold">Explorer Tip:</span> Remember that 'Part to Whole'
-              (Bahagian kepada Keseluruhan) compares the specific items against the TOTAL combined
-              sum of everything in the container! Let's sum them up and try once more!
-            </p>
+            <p className="text-sm font-medium leading-relaxed">{hintText}</p>
           </div>
         )}
 
