@@ -113,7 +113,7 @@ export function PestaRiaFeast() {
                       inputMode="numeric"
                       value={values[i.key]}
                       onChange={(e) => setVal(i.key, e.target.value)}
-                      placeholder={`e.g. ${i.base} × ${FACTOR}`}
+                      placeholder="e.g. 1000"
                       className="mt-1 font-display text-lg font-bold"
                       disabled={won}
                     />
