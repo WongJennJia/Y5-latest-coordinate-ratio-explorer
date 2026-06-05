@@ -46,7 +46,9 @@ export function PestaRiaFeast() {
       markComplete("final");
       blast();
     } else {
-      setFeedback(game.hint);
+      setFeedback(
+        `💡 Chef's Secret: To perfectly scale up our recipe for a massive new group of unexpected guests, first find the scale factor ratio between the new crowd size (${game.targetPax} pax) and our standard recipe base (${game.basePax} pax). Then, apply that same multiplier to scale up each ingredient accordingly!`,
+      );
     }
   };
 
