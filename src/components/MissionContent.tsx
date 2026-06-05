@@ -13,6 +13,24 @@ import missionsData from "@/data/missions.json";
 
 type Mission = (typeof missionsData.missions)[number];
 
+const TOPIC_HINTS: Record<string, string> = {
+  coordinates:
+    "💡 Explorer Tip: Remember that in a coordinate pair (x, y), the first number represents the horizontal position on the x-axis (paksi-x), and the second number represents the vertical position on the y-axis (paksi-y). To calculate the distance between two points on a flat grid line, look at the difference between the changing values! For example, the distance from (1, 3) to (6, 3) is 5 units because only the horizontal position changed.",
+  ratio:
+    "💡 Explorer Tip: A ratio compares parts directly in a specific order. If a question asks for a 'Part to Whole' (Bahagian kepada Keseluruhan) relationship, you must compare the requested item against the TOTAL combined sum of all items in the set rather than just the other item!",
+  proportion:
+    "💡 Explorer Tip: Proportion represents equivalent ratios (Kadar yang sama). To check if two separate relationships form a proper proportion, verify if they scale up or down by the exact same multiplier. For example, a base ratio of 1:4 scaled up uniformly by a factor of 2 becomes 2:8.",
+};
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export function MissionContent({
   missionId,
   icon,
@@ -174,7 +192,9 @@ export function MissionContent({
             done={done}
             nextTo={nextTo}
             onBackToExplore={() => setActiveTab("explore")}
+            hintText={TOPIC_HINTS[missionId] ?? TOPIC_HINTS.ratio}
           />
+
         </TabsContent>
       </Tabs>
     </div>
@@ -188,6 +208,7 @@ function PracticeQuiz({
   done,
   nextTo,
   onBackToExplore,
+  hintText,
 }: {
   questions: { q: string; options: string[]; answer: number }[];
   intro: string;
@@ -195,9 +216,14 @@ function PracticeQuiz({
   done: boolean;
   nextTo: string;
   onBackToExplore: () => void;
+  hintText: string;
 }) {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
+  // Per-question display order of option indices (anti-guessing shuffling on retry).
+  const [order, setOrder] = useState<number[][]>(() =>
+    questions.map((q) => q.options.map((_, i) => i)),
+  );
 
   const allAnswered = questions.every((_, i) => answers[i] !== undefined);
   const score = questions.filter((q, i) => answers[i] === q.answer).length;
@@ -207,6 +233,8 @@ function PracticeQuiz({
   const handleResetQuiz = () => {
     setSubmitted(false);
     setAnswers({});
+    // Shuffle option placement so students can't memorize button positions.
+    setOrder(questions.map((q) => shuffle(q.options.map((_, i) => i))));
   };
 
   // Auto-lock progress permanently when the student gets a perfect score.
@@ -214,6 +242,7 @@ function PracticeQuiz({
     if (passed) onComplete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [passed]);
+
 
   return (
     <Card className="mint-card-shadow">
@@ -229,7 +258,8 @@ function PracticeQuiz({
               {qi + 1}. {q.q}
             </p>
             <div className="grid gap-2 sm:grid-cols-2">
-              {q.options.map((opt, oi) => {
+              {order[qi].map((oi) => {
+                const opt = q.options[oi];
                 const selected = answers[qi] === oi;
                 const correct = submitted && oi === q.answer;
                 const wrong = submitted && selected && oi !== q.answer;
@@ -259,13 +289,9 @@ function PracticeQuiz({
 
         {/* Diagnostic hint box — only shown when score is not perfect */}
         {failed && (
-          <div className="flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
+          <div className="flex items-start gap-3 rounded-2xl border-2 border-amber-400 bg-amber-50 p-4 text-amber-900">
             <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-            <p className="text-sm">
-              💡 <span className="font-semibold">Explorer Tip:</span> Remember that 'Part to Whole'
-              (Bahagian kepada Keseluruhan) compares the specific items against the TOTAL combined
-              sum of everything in the container! Let's sum them up and try once more!
-            </p>
+            <p className="text-sm font-medium leading-relaxed">{hintText}</p>
           </div>
         )}
 
