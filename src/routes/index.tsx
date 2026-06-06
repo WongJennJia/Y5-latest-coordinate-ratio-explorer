@@ -38,7 +38,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const ICONS = { Grid3x3, Scale, Percent, Trophy } as const;
+const ICONS = { Grid3x3, Scale, Percent, Trophy, ClipboardCheck } as const;
 
 function HomePage() {
   const { percent, completedCount, totalCount, isUnlocked, isCompleted } = useProgress();
