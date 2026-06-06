@@ -52,9 +52,15 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw =
+  typeof window !== "undefined"
+    ? localStorage.getItem(STORAGE_KEY)
+    : null;
       if (raw) setCompleted({ ...DEFAULT_STATE, ...JSON.parse(raw) });
-      const pts = localStorage.getItem(POINTS_KEY);
+      const pts =
+  typeof window !== "undefined"
+    ? localStorage.getItem(POINTS_KEY)
+    : null;
       if (pts) setScorePoints(Number(pts) || 0);
     } catch {
       /* ignore */
