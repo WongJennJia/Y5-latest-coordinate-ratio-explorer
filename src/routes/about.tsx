@@ -152,10 +152,14 @@ function AboutPage() {
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wide text-primary/70">Co-Developer ({meta.course})</p>
                     <p className="font-display text-lg font-extrabold text-foreground">{dev.name}</p>
-                    <p className="text-xs text-muted-foreground">IPG Kampus Rajang</p>
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Social Footer */}
+            <div className="rounded-xl bg-mint-50/60 p-4 text-center text-sm font-medium text-slate-800 dark:text-slate-100">
+              ✉️ Get social with us! Gmail: jennjiawong@gmail.com · schafina98@gmail.com
             </div>
 
             {/* Campus & Academic Meta Info Footer */}
@@ -166,7 +170,7 @@ function AboutPage() {
                 </span>
                 <div>
                   <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Institution</p>
-                  <p className="text-xs font-bold text-foreground">{meta.institution}</p>
+                  <p className="text-xs font-medium text-slate-800 dark:text-slate-100">{meta.institution}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
@@ -175,7 +179,7 @@ function AboutPage() {
                 </span>
                 <div>
                   <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Academic Year</p>
-                  <p className="text-xs font-bold text-foreground">{meta.academicYear}</p>
+                  <p className="text-xs font-medium text-slate-800 dark:text-slate-100">{meta.academicYear}</p>
                 </div>
               </div>
             </div>
