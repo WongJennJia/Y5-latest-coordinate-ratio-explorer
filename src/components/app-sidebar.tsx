@@ -65,7 +65,7 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { isUnlocked, isCompleted } = useProgress();
+  const { isUnlocked, isCompleted, currentRole, toggleRole } = useProgress();
 
   const renderItem = (item: NavItem) => {
     const active = pathname === item.url;
