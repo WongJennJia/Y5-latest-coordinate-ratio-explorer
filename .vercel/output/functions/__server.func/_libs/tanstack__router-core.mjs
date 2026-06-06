@@ -4680,11 +4680,11 @@ function getScrollRestorationScriptForRouter(router) {
   return getScrollRestorationScript(userKey);
 }
 export {
-  getNormalizedURL as A,
+  getOrigin as A,
   BaseRootRoute as B,
-  getOrigin as C,
-  normalizeSsrResponse as D,
-  attachRouterServerSsrUtils as E,
+  normalizeSsrResponse as C,
+  attachRouterServerSsrUtils as D,
+  defineHandlerCallback as E,
   createSerializationAdapter as F,
   createRawStreamRPCPlugin as G,
   isResolvedRedirect as H,
@@ -4721,6 +4721,6 @@ export {
   transformReadableStreamWithRouter as v,
   createSsrStreamResponse as w,
   transformPipeableStreamWithRouter as x,
-  defineHandlerCallback as y,
-  resolveManifestAssetLink as z
+  resolveManifestAssetLink as y,
+  getNormalizedURL as z
 };
