@@ -14,7 +14,7 @@ const game = missionsData.finalChallenge.games.stage3;
 const FACTOR = game.targetPax / game.basePax;
 
 export function PestaRiaFeast() {
-  const { markComplete } = useProgress();
+  const { markComplete, addPoints } = useProgress();
   const [values, setValues] = useState<Record<string, string>>(
     Object.fromEntries(game.ingredients.map((i) => [i.key, ""])),
   );
