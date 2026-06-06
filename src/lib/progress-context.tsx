@@ -14,6 +14,8 @@ const DEFAULT_STATE: ProgressState = {
   final: false,
 };
 
+export type Role = "student" | "teacher";
+
 interface ProgressContextValue {
   completed: ProgressState;
   isCompleted: (id: MissionId) => boolean;
@@ -23,12 +25,20 @@ interface ProgressContextValue {
   completedCount: number;
   totalCount: number;
   percent: number;
+  currentRole: Role;
+  toggleRole: () => void;
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [completed, setCompleted] = useState<ProgressState>(DEFAULT_STATE);
+  const [currentRole, setCurrentRole] = useState<Role>("student");
+
+  const toggleRole = useCallback(
+    () => setCurrentRole((r) => (r === "student" ? "teacher" : "student")),
+    [],
+  );
 
   useEffect(() => {
     try {
