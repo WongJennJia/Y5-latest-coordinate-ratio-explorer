@@ -46,8 +46,14 @@ const missionNav: NavItem[] = [
   { title: "Ratio", url: "/ratio", icon: Scale, missionId: "ratio" },
   { title: "Proportion", url: "/proportion", icon: Percent, missionId: "proportion" },
   { title: "Final Challenge", url: "/final-challenge", icon: Trophy, missionId: "final" },
-  { title: "Mission Reflection", url: "/reflection", icon: ClipboardCheck },
+  { title: "Mission Reflection", url: "/student-feedback", icon: ClipboardCheck },
 ];
+
+const teacherNav: NavItem = {
+  title: "Teacher Reflection",
+  url: "/reflection",
+  icon: BookOpen,
+};
 
 const infoNav: NavItem[] = [
   { title: "About Project", url: "/about", icon: Info },
