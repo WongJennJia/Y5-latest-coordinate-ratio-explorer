@@ -6,6 +6,7 @@ import {
   Scale,
   Percent,
   Trophy,
+  ClipboardCheck,
   NotebookPen,
   Info,
   Lock,
