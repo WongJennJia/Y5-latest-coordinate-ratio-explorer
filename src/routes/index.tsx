@@ -4,6 +4,7 @@ import {
   Scale,
   Percent,
   Trophy,
+  ClipboardCheck,
   Lock,
   CheckCircle2,
   ArrowRight,
@@ -37,7 +38,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const ICONS = { Grid3x3, Scale, Percent, Trophy } as const;
+const ICONS = { Grid3x3, Scale, Percent, Trophy, ClipboardCheck } as const;
 
 function HomePage() {
   const { percent, completedCount, totalCount, isUnlocked, isCompleted } = useProgress();
@@ -157,6 +158,9 @@ function HomePage() {
                     </div>
                     <div>
                       <p className="font-display text-lg font-bold">{m.label}</p>
+                      {"tagline" in m && m.tagline && (
+                        <p className="text-sm font-medium text-primary/80">{m.tagline}</p>
+                      )}
                       <p className="text-sm text-muted-foreground">
                         Mission {i + 1} · {points} points
                       </p>
@@ -203,4 +207,4 @@ function HomePage() {
   );
 }
 
-const POINTS = [100, 150, 200, 300];
+const POINTS = [100, 150, 200, 300, 500];

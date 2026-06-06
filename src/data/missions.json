@@ -6,7 +6,7 @@
     "audience": "Year 5 Primary (10–11 years)",
     "curriculum": "DSKP KSSR Mathematics Year 5",
     "videoId": "fEYWr2CBjnA",
-    "googleFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeoDA4-mmGPt1e7-lajYeshgPaWa8S4krzN5Dnw2uiV3fH6eA/viewform?embedded=true",
+    "studentFeedbackFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeoDA4-mmGPt1e7-lajYeshgPaWa8S4krzN5Dnw2uiV3fH6eA/viewform?embedded=true",
     "developers": [
       { "name": "Wong Jenn Jia", "image": "/developer1.png" },
       { "name": "Shyafina Soleha", "image": "/developer2.png" }
@@ -16,10 +16,11 @@
     "description": "An interactive, mission-based multimedia learning resource that teaches Year 5 pupils coordinates, ratio and proportion through gamified Malaysian real-world contexts."
   },
   "milestones": [
-    { "id": "coordinates", "label": "Coordinates", "icon": "Grid3x3", "to": "/coordinates" },
-    { "id": "ratio", "label": "Ratio", "icon": "Scale", "to": "/ratio" },
-    { "id": "proportion", "label": "Proportion", "icon": "Percent", "to": "/proportion" },
-    { "id": "final", "label": "Final Challenge", "icon": "Trophy", "to": "/final-challenge" }
+    { "id": "coordinates", "label": "Coordinates", "tagline": "Map the world with X and Y!", "icon": "Grid3x3", "to": "/coordinates" },
+    { "id": "ratio", "label": "Ratio", "tagline": "Compare amounts the smart way!", "icon": "Scale", "to": "/ratio" },
+    { "id": "proportion", "label": "Proportion", "tagline": "Scale recipes up and down!", "icon": "Percent", "to": "/proportion" },
+    { "id": "final", "label": "Final Challenge", "tagline": "The Malaysian School Carnival Simulation!", "icon": "Trophy", "to": "/final-challenge" },
+    { "id": "reflection", "label": "Mission Reflection", "tagline": "Share your adventure feedback!", "icon": "ClipboardCheck", "to": "/student-feedback" }
   ],
   "missions": [
     {
