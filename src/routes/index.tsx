@@ -158,6 +158,9 @@ function HomePage() {
                     </div>
                     <div>
                       <p className="font-display text-lg font-bold">{m.label}</p>
+                      {"tagline" in m && m.tagline && (
+                        <p className="text-sm font-medium text-primary/80">{m.tagline}</p>
+                      )}
                       <p className="text-sm text-muted-foreground">
                         Mission {i + 1} · {points} points
                       </p>
