@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
+import { ClipboardCheck, ExternalLink } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import missionsData from "@/data/missions.json";
 
 export const Route = createFileRoute("/reflection")({
@@ -17,8 +18,12 @@ export const Route = createFileRoute("/reflection")({
 });
 
 function ReflectionView() {
-  const formUrl = missionsData.meta.googleFormUrl || "https://forms.gle/KayFyQg3U7XMpruq5";
-  const embedUrl = formUrl.includes("?") ? `${formUrl}&embedded=true` : `${formUrl}?embedded=true`;
+  const embedUrl =
+    missionsData.meta.googleFormUrl ||
+    "https://docs.google.com/forms/d/e/1FAIpQLSeoDA4-mmGPt1e7-lajYeshgPaWa8S4krzN5Dnw2uiV3fH6eA/viewform?embedded=true";
+
+  const fallbackUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSeoDA4-mmGPt1e7-lajYeshgPaWa8S4krzN5Dnw2uiV3fH6eA/viewform";
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -31,12 +36,22 @@ function ReflectionView() {
           Mission Reflection &amp; Feedback
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Congratulations on completing your adventure! Please share your valuable thoughts and
-          learning feedback with us using the official Google Form below.
+          Congratulations on completing your adventure! Please share your
+          valuable feedback using the form below.
         </p>
+
+        {/* Network Fallback Button with Full Link */}
+        <div className="mt-5 flex justify-center">
+          <Button asChild variant="outline" className="gap-2 rounded-xl">
+            <a href={fallbackUrl} target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-4 w-4" />
+              Can&apos;t see the form? Open in New Tab
+            </a>
+          </Button>
+        </div>
       </div>
 
-      {/* Google Form Embedded Display Frame Container */}
+      {/* Google Form Embedded Display Frame */}
       <Card className="overflow-hidden mint-card-shadow">
         <CardContent className="p-0">
           <div className="h-[1100px] w-full bg-muted">
@@ -54,8 +69,9 @@ function ReflectionView() {
 
       {/* Verification Notice Badge */}
       <div className="flex items-center justify-center gap-2 text-center text-xs font-medium text-muted-foreground">
-        <ShieldCheck className="h-4 w-4 text-primary" />
-        Your input helps Wong &amp; Shyafina refine this Year 5 Math Multimedia resource!
+        <ClipboardCheck className="h-4 w-4 text-primary" />
+        Your input helps Wong &amp; Shyafina refine this Year 5 Math Multimedia
+        resource!
       </div>
     </div>
   );
