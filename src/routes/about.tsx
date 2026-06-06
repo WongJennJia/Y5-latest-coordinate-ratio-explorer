@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Info, GraduationCap, BookMarked, LayoutGrid, Trophy, User, Building2, CalendarDays } from "lucide-react";
+import { Info, GraduationCap, BookMarked, LayoutGrid, Trophy, Building2, CalendarDays } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
