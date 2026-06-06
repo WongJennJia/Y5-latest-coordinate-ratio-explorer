@@ -87,8 +87,10 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       completedCount,
       totalCount: ORDER.length,
       percent: Math.round((completedCount / ORDER.length) * 100),
+      currentRole,
+      toggleRole,
     };
-  }, [completed, isCompleted, isUnlocked, markComplete, resetProgress]);
+  }, [completed, isCompleted, isUnlocked, markComplete, resetProgress, currentRole, toggleRole]);
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
