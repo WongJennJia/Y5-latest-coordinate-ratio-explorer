@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
-export type MissionId = "coordinates" | "ratio" | "proportion" | "final";
+export type MissionId = "coordinates" | "ratio" | "proportion" | "final" | "reflection";
 
-const ORDER: MissionId[] = ["coordinates", "ratio", "proportion", "final"];
+const ORDER: MissionId[] = ["coordinates", "ratio", "proportion", "final", "reflection"];
 const STORAGE_KEY = "math-explorer-progress";
+const POINTS_KEY = "math-explorer-points";
 
 type ProgressState = Record<MissionId, boolean>;
 
@@ -12,7 +13,18 @@ const DEFAULT_STATE: ProgressState = {
   ratio: false,
   proportion: false,
   final: false,
+  reflection: false,
 };
+
+const ALL_COMPLETE: ProgressState = {
+  coordinates: true,
+  ratio: true,
+  proportion: true,
+  final: true,
+  reflection: true,
+};
+
+export type Role = "student" | "teacher";
 
 interface ProgressContextValue {
   completed: ProgressState;
@@ -23,17 +35,27 @@ interface ProgressContextValue {
   completedCount: number;
   totalCount: number;
   percent: number;
+  scorePoints: number;
+  addPoints: (amount: number) => void;
+  currentRole: Role;
+  toggleRoleWithPin: (pin: string) => void;
+  unlockAllMissions: () => void;
+  resetAllProgress: () => void;
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [completed, setCompleted] = useState<ProgressState>(DEFAULT_STATE);
+  const [currentRole, setCurrentRole] = useState<Role>("student");
+  const [scorePoints, setScorePoints] = useState<number>(0);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setCompleted({ ...DEFAULT_STATE, ...JSON.parse(raw) });
+      const pts = localStorage.getItem(POINTS_KEY);
+      if (pts) setScorePoints(Number(pts) || 0);
     } catch {
       /* ignore */
     }
@@ -47,6 +69,28 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       /* ignore */
     }
   }, []);
+
+  const persistPoints = useCallback((next: number) => {
+    setScorePoints(next);
+    try {
+      localStorage.setItem(POINTS_KEY, String(next));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const addPoints = useCallback(
+    (amount: number) => setScorePoints((prev) => {
+      const next = prev + amount;
+      try {
+        localStorage.setItem(POINTS_KEY, String(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    }),
+    [],
+  );
 
   const isCompleted = useCallback((id: MissionId) => completed[id], [completed]);
 
@@ -66,6 +110,30 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   const resetProgress = useCallback(() => persist(DEFAULT_STATE), [persist]);
 
+  const toggleRoleWithPin = useCallback((pin: string) => {
+    setCurrentRole((prev) => {
+      if (prev === "teacher") return "student";
+      return pin === "2112" ? "teacher" : prev;
+    });
+  }, []);
+
+  const unlockAllMissions = useCallback(() => {
+    persist(ALL_COMPLETE);
+    persistPoints(500);
+  }, [persist, persistPoints]);
+
+  const resetAllProgress = useCallback(() => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(POINTS_KEY);
+    } catch {
+      /* ignore */
+    }
+    setCompleted(DEFAULT_STATE);
+    setScorePoints(0);
+    setCurrentRole("student");
+  }, []);
+
   const value = useMemo<ProgressContextValue>(() => {
     const completedCount = ORDER.filter((id) => completed[id]).length;
     return {
@@ -77,8 +145,26 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       completedCount,
       totalCount: ORDER.length,
       percent: Math.round((completedCount / ORDER.length) * 100),
+      scorePoints,
+      addPoints,
+      currentRole,
+      toggleRoleWithPin,
+      unlockAllMissions,
+      resetAllProgress,
     };
-  }, [completed, isCompleted, isUnlocked, markComplete, resetProgress]);
+  }, [
+    completed,
+    isCompleted,
+    isUnlocked,
+    markComplete,
+    resetProgress,
+    scorePoints,
+    addPoints,
+    currentRole,
+    toggleRoleWithPin,
+    unlockAllMissions,
+    resetAllProgress,
+  ]);
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }

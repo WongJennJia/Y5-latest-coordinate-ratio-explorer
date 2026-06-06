@@ -7,7 +7,7 @@ import {
   Percent,
   Trophy,
   ClipboardCheck,
-  
+  BookOpen,
   Info,
   Lock,
   CheckCircle2,
@@ -36,20 +36,18 @@ type NavItem = {
   missionId?: MissionId;
 };
 
-const mainNav: NavItem[] = [
+const studentNav: NavItem[] = [
   { title: "Home", url: "/", icon: Home },
   { title: "Getting Started", url: "/getting-started", icon: Rocket },
-];
-
-const missionNav: NavItem[] = [
   { title: "Coordinates", url: "/coordinates", icon: Grid3x3, missionId: "coordinates" },
   { title: "Ratio", url: "/ratio", icon: Scale, missionId: "ratio" },
   { title: "Proportion", url: "/proportion", icon: Percent, missionId: "proportion" },
   { title: "Final Challenge", url: "/final-challenge", icon: Trophy, missionId: "final" },
-  { title: "Mission Reflection", url: "/reflection", icon: ClipboardCheck },
+  { title: "Mission Reflection", url: "/student-feedback", icon: ClipboardCheck },
 ];
 
-const infoNav: NavItem[] = [
+const appraisalNav: NavItem[] = [
+  { title: "Teacher Reflection", url: "/reflection", icon: BookOpen },
   { title: "About Project", url: "/about", icon: Info },
 ];
 
@@ -57,7 +55,14 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { isUnlocked, isCompleted } = useProgress();
+  const {
+    isUnlocked,
+    isCompleted,
+    currentRole,
+    toggleRoleWithPin,
+    unlockAllMissions,
+    resetAllProgress,
+  } = useProgress();
 
   const renderItem = (item: NavItem) => {
     const active = pathname === item.url;
@@ -85,6 +90,16 @@ export function AppSidebar() {
     );
   };
 
+  const handleSwitch = () => {
+    if (currentRole === "student") {
+      const pass = window.prompt("🔑 Enter Teacher Security PIN:");
+      if (pass === "2112") toggleRoleWithPin("2112");
+      else if (pass !== null) window.alert("❌ Invalid PIN!");
+    } else {
+      toggleRoleWithPin("");
+    }
+  };
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -103,30 +118,53 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
+          <SidebarGroupLabel>🎒 Student Adventure</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>{mainNav.map(renderItem)}</SidebarMenu>
+            <SidebarMenu>{studentNav.map(renderItem)}</SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Missions</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>{missionNav.map(renderItem)}</SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Appraisal</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>{infoNav.map(renderItem)}</SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {currentRole === "teacher" && (
+          <SidebarGroup>
+            <SidebarGroupLabel>📂 Appraisal &amp; Specs</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>{appraisalNav.map(renderItem)}</SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
 
       <SidebarFooter>
         {!collapsed && (
-          <p className="px-2 py-1 text-[11px] text-muted-foreground">EDUP2112 · DSKP KSSR</p>
+          <div className="m-1 rounded-xl border border-primary/15 bg-mint-50/60 p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-foreground">🛠️ Dev Controller</span>
+              <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary">
+                {currentRole.toUpperCase()} VIEW
+              </span>
+            </div>
+            <button
+              onClick={handleSwitch}
+              className="w-full rounded-lg bg-cta px-2 py-1.5 text-[11px] font-semibold text-cta-foreground transition-colors hover:bg-cta/90"
+            >
+              🔄 Switch Perspective
+            </button>
+            <div className="mt-2 flex gap-2">
+              <button
+                onClick={unlockAllMissions}
+                className="flex-1 rounded-lg bg-primary/10 px-2 py-1.5 text-[10px] font-semibold text-primary transition-colors hover:bg-primary/20"
+              >
+                🔓 Unlock All
+              </button>
+              <button
+                onClick={resetAllProgress}
+                className="flex-1 rounded-lg bg-destructive/10 px-2 py-1.5 text-[10px] font-semibold text-destructive transition-colors hover:bg-destructive/20"
+              >
+                🔄 Reset Grid
+              </button>
+            </div>
+            <p className="mt-2 text-[10px] text-muted-foreground">EDUP2112 · DSKP KSSR</p>
+          </div>
         )}
       </SidebarFooter>
     </Sidebar>
