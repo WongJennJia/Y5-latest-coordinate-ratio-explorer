@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ClipboardCheck, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import missionsData from "@/data/missions.json";
