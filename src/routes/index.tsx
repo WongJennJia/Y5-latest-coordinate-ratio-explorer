@@ -207,4 +207,4 @@ function HomePage() {
   );
 }
 
-const POINTS = [100, 150, 200, 300];
+const POINTS = [100, 150, 200, 300, 500];
