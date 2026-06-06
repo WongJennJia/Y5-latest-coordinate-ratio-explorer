@@ -135,7 +135,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        {!collapsed && (
+        {!collapsed && currentRole === "teacher" && (
           <div className="m-1 rounded-xl border border-primary/15 bg-mint-50/60 p-3">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-[11px] font-bold text-foreground">🛠️ Dev Controller</span>
@@ -166,7 +166,18 @@ export function AppSidebar() {
             <p className="mt-2 text-[10px] text-muted-foreground">EDUP2112 · DSKP KSSR</p>
           </div>
         )}
+        {!collapsed && currentRole === "student" && (
+          <button
+            onClick={handleSwitch}
+            aria-label="Teacher Login"
+            title="Teacher Login"
+            className="m-1 self-end text-[10px] text-muted-foreground/40 transition-colors hover:text-muted-foreground"
+          >
+            Teacher Login
+          </button>
+        )}
       </SidebarFooter>
+
     </Sidebar>
   );
 }
