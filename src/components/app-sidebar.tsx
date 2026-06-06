@@ -120,9 +120,13 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Missions</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>{missionNav.map(renderItem)}</SidebarMenu>
+            <SidebarMenu>
+              {missionNav.map(renderItem)}
+              {currentRole === "teacher" && renderItem(teacherNav)}
+            </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
 
         <SidebarGroup>
           <SidebarGroupLabel>Appraisal</SidebarGroupLabel>
