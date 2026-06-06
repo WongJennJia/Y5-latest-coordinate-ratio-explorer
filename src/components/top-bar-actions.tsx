@@ -98,15 +98,28 @@ export function TopBarActions() {
               intensive math exploration.
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-sm font-medium">Minutes:</span>
-              <Input
-                type="number"
-                min={1}
-                max={60}
-                value={breakMinutes}
-                onChange={(e) => setBreakMinutes(Number(e.target.value))}
-                className="w-20 rounded-xl"
-              />
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium">Minutes:</span>
+                <Input
+                  type="number"
+                  min={0}
+                  max={60}
+                  value={breakMinutes}
+                  onChange={(e) => setBreakMinutes(Number(e.target.value))}
+                  className="w-20 rounded-xl"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium">Seconds:</span>
+                <Input
+                  type="number"
+                  min={0}
+                  max={59}
+                  value={breakSeconds}
+                  onChange={(e) => setBreakSeconds(Number(e.target.value))}
+                  className="w-20 rounded-xl"
+                />
+              </div>
             </div>
             <Button onClick={startBreakTimer} className="w-full rounded-xl font-bold">
               Start Countdown
