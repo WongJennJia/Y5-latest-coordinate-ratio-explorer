@@ -7,7 +7,7 @@ import {
   Percent,
   Trophy,
   ClipboardCheck,
-  NotebookPen,
+  
   Info,
   Lock,
   CheckCircle2,
