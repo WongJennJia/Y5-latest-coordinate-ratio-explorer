@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
 const ICONS = { Grid3x3, Scale, Percent, Trophy, ClipboardCheck } as const;
 
 function HomePage() {
-  const { percent, completedCount, totalCount, isUnlocked, isCompleted } = useProgress();
+  const { percent, completedCount, totalCount, isUnlocked, isCompleted, scorePoints } = useProgress();
 
   return (
     <div className="mx-auto max-w-6xl">
