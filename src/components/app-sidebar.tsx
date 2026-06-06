@@ -7,6 +7,8 @@ import {
   Percent,
   Trophy,
   ClipboardCheck,
+  BookOpen,
+
   
   Info,
   Lock,
