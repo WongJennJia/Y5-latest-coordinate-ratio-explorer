@@ -4,6 +4,7 @@ import {
   Scale,
   Percent,
   Trophy,
+  ClipboardCheck,
   Lock,
   CheckCircle2,
   ArrowRight,
