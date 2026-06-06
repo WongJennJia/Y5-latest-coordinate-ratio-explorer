@@ -5,7 +5,8 @@
     "course": "EDUP2112",
     "audience": "Year 5 Primary (10–11 years)",
     "curriculum": "DSKP KSSR Mathematics Year 5",
-    "videoId": "byjmR7JBXKc",
+    "videoId": "fEYWr2CBjnA",
+    "googleFormUrl": "https://forms.gle/KayFyQg3U7XMpruq5",
     "developers": [
       { "name": "Wong Jenn Jia", "image": "/developer1.png" },
       { "name": "Shyafina Soleha", "image": "/developer2.png" }
@@ -46,6 +47,7 @@
       "explore": {
         "tool": "GeoGebra Classroom",
         "embedUrl": "https://www.geogebra.org/classroom/asxd8tzc",
+        "scratchUrl": "https://scratch.mit.edu/projects/embed/1316563434",
         "note": "Drag the points and watch the horizontal and vertical distances change in real time."
       },
       "practice": {
@@ -132,6 +134,14 @@
       "explore": {
         "tool": "GeoGebra Classroom",
         "embedUrl": "https://www.geogebra.org/classroom/fm5gudkc",
+        "lumiUrl": "https://app.lumi.education/api/v1/run/hKbQo9/embed",
+        "smoothieIngredients": [
+          "1 cup milk",
+          "100g blueberries",
+          "200g strawberries",
+          "2 tablespoons condensed milk, sweetened",
+          "4 oatmeal cookies"
+        ],
         "note": "Scale the recipe and watch both quantities change in proportion."
       },
       "practice": {

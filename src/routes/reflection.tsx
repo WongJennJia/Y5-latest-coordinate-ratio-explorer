@@ -1,65 +1,61 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { NotebookPen, ThumbsUp, TrendingUp, GraduationCap } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
-import { PageHeader } from "@/components/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import missionsData from "@/data/missions.json";
 
 export const Route = createFileRoute("/reflection")({
   head: () => ({
     meta: [
-      { title: "Teacher–Developer Reflection — Math Explorer" },
-      { name: "description", content: "Academic reflection on project strengths, areas for improvement and pedagogical design justifications (KPPB alignment)." },
-      { property: "og:title", content: "Teacher–Developer Reflection — Math Explorer" },
-      { property: "og:description", content: "Reflection and pedagogical justification for the EDUP2112 assignment." },
+      { title: "Mission Reflection & Feedback — Math Explorer" },
+      { name: "description", content: "Share your learning feedback and reflection on the Year 5 Coordinates, Ratio and Proportion adventure." },
+      { property: "og:title", content: "Mission Reflection & Feedback — Math Explorer" },
+      { property: "og:description", content: "Complete the official reflection questionnaire for the Math Explorer learning resource." },
     ],
   }),
-  component: ReflectionPage,
+  component: ReflectionView,
 });
 
-function ReflectionPage() {
-  const { strengths, improvements, justifications } = missionsData.reflection;
-
-  const sections = [
-    { title: "Project Strengths", icon: ThumbsUp, items: strengths, accent: "text-primary" },
-    { title: "Areas for Improvement", icon: TrendingUp, items: improvements, accent: "text-cta" },
-    {
-      title: "Pedagogical Design Justifications (KPPB Alignment)",
-      icon: GraduationCap,
-      items: justifications,
-      accent: "text-primary",
-    },
-  ];
+function ReflectionView() {
+  const formUrl = missionsData.meta.googleFormUrl || "https://forms.gle/KayFyQg3U7XMpruq5";
+  const embedUrl = formUrl.includes("?") ? `${formUrl}&embedded=true` : `${formUrl}?embedded=true`;
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <PageHeader
-        eyebrow="EDUP2112 Appraisal"
-        title="Teacher–Developer Reflection"
-        description="An academic reflection on the design and pedagogy of this learning resource. Edit the dummy text to fit your write-up."
-        icon={<NotebookPen className="h-6 w-6" />}
-      />
+    <div className="mx-auto max-w-3xl space-y-6">
+      {/* Page Header Accent Banner */}
+      <div className="rounded-2xl bg-gradient-to-br from-primary/10 to-mint-50/60 p-8 text-center">
+        <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/15 text-3xl">
+          🤔
+        </span>
+        <h1 className="font-display text-3xl font-extrabold text-foreground">
+          Mission Reflection &amp; Feedback
+        </h1>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+          Congratulations on completing your adventure! Please share your valuable thoughts and
+          learning feedback with us using the official Google Form below.
+        </p>
+      </div>
 
-      <div className="space-y-6">
-        {sections.map((s) => (
-          <Card key={s.title} className="mint-card-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2.5">
-                <s.icon className={`h-5 w-5 ${s.accent}`} /> {s.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {s.items.map((item, i) => (
-                  <li key={i} className="flex gap-3 text-sm leading-relaxed text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Google Form Embedded Display Frame Container */}
+      <Card className="overflow-hidden mint-card-shadow">
+        <CardContent className="p-0">
+          <div className="h-[1100px] w-full bg-muted">
+            <iframe
+              src={embedUrl}
+              title="Mission Reflection Questionnaire"
+              className="h-full w-full"
+              loading="lazy"
+            >
+              Loading reflection questionnaire...
+            </iframe>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Verification Notice Badge */}
+      <div className="flex items-center justify-center gap-2 text-center text-xs font-medium text-muted-foreground">
+        <ShieldCheck className="h-4 w-4 text-primary" />
+        Your input helps Wong &amp; Shyafina refine this Year 5 Math Multimedia resource!
       </div>
     </div>
   );

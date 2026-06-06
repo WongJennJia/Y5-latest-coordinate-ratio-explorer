@@ -6,7 +6,8 @@ import {
   Scale,
   Percent,
   Trophy,
-  NotebookPen,
+  ClipboardCheck,
+  
   Info,
   Lock,
   CheckCircle2,
@@ -45,10 +46,10 @@ const missionNav: NavItem[] = [
   { title: "Ratio", url: "/ratio", icon: Scale, missionId: "ratio" },
   { title: "Proportion", url: "/proportion", icon: Percent, missionId: "proportion" },
   { title: "Final Challenge", url: "/final-challenge", icon: Trophy, missionId: "final" },
+  { title: "Mission Reflection", url: "/reflection", icon: ClipboardCheck },
 ];
 
 const infoNav: NavItem[] = [
-  { title: "Teacher Reflection", url: "/reflection", icon: NotebookPen },
   { title: "About Project", url: "/about", icon: Info },
 ];
 

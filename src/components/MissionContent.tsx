@@ -165,6 +165,63 @@ export function MissionContent({
             </CardContent>
           </Card>
 
+          {"scratchUrl" in mission.explore && mission.explore.scratchUrl && (
+            <Card className="mt-6 overflow-hidden border-primary/10 shadow-sm">
+              <CardHeader className="bg-mint-50/50 py-4">
+                <CardTitle className="flex items-center gap-2 text-base font-bold text-foreground">
+                  🎮 Scratch Coordinate Game Sandbox
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-5">
+                <div className="aspect-video w-full overflow-hidden rounded-xl border bg-black shadow-md">
+                  <iframe
+                    src={mission.explore.scratchUrl}
+                    title={`${mission.title} — Scratch Game`}
+                    className="h-full w-full"
+                    allowFullScreen
+                    allow="autoplay; fullscreen"
+                  />
+                </div>
+                <p className="mt-3 text-center text-xs text-muted-foreground">
+                  Tip: Click the green flag inside the Scratch player to test coordinates inside the game viewport!
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {"lumiUrl" in mission.explore && mission.explore.lumiUrl && (
+            <Card className="mt-6 overflow-hidden border-primary/10 shadow-sm">
+              <CardHeader className="bg-mint-50/50 py-4">
+                <CardTitle className="flex items-center gap-2 text-base font-bold text-foreground">
+                  🥤 Smoothie Making Masterclass (Interactive Video)
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 p-5">
+                <div className="rounded-xl border border-amber-100 bg-amber-50/50 p-4 dark:border-slate-800 dark:bg-slate-900">
+                  <h4 className="mb-2 text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-400">
+                    📝 The Perfect Smoothie Recipe Ingredients:
+                  </h4>
+                  <ul className="grid grid-cols-1 gap-1.5 text-sm font-medium text-foreground/90 sm:grid-cols-2">
+                    {mission.explore.smoothieIngredients?.map((ing: string) => (
+                      <li key={ing} className="flex items-center gap-2">
+                        <span className="text-xs text-primary">✨</span> {ing}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="aspect-video w-full overflow-hidden rounded-xl border bg-black shadow-md">
+                  <iframe
+                    src={mission.explore.lumiUrl}
+                    title={`${mission.title} — Smoothie Masterclass`}
+                    className="h-full w-full"
+                    allowFullScreen
+                    allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           <div className="mt-6 flex items-center justify-between gap-3">
             <Button
               variant="ghost"
