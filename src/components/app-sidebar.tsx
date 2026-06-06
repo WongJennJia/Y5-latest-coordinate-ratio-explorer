@@ -44,11 +44,11 @@ const studentNav: NavItem[] = [
   { title: "Proportion", url: "/proportion", icon: Percent, missionId: "proportion" },
   { title: "Final Challenge", url: "/final-challenge", icon: Trophy, missionId: "final" },
   { title: "Mission Reflection", url: "/student-feedback", icon: ClipboardCheck },
+  { title: "About Project", url: "/about", icon: Info },
 ];
 
 const appraisalNav: NavItem[] = [
   { title: "Teacher Reflection", url: "/reflection", icon: BookOpen },
-  { title: "About Project", url: "/about", icon: Info },
 ];
 
 export function AppSidebar() {
