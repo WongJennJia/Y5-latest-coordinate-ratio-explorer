@@ -6,7 +6,10 @@
     "audience": "Year 5 Primary (10–11 years)",
     "curriculum": "DSKP KSSR Mathematics Year 5",
     "videoId": "byjmR7JBXKc",
-    "developer": "Wong Jenn Jia & Shyafina Soleha",
+    "developers": [
+      { "name": "Wong Jenn Jia", "image": "/developer1.png" },
+      { "name": "Shyafina Soleha", "image": "/developer2.png" }
+    ],
     "institution": "Institut Pendidikan Guru Kampus Rajang",
     "academicYear": "2025 / 2026",
     "description": "An interactive, mission-based multimedia learning resource that teaches Year 5 pupils coordinates, ratio and proportion through gamified Malaysian real-world contexts."
