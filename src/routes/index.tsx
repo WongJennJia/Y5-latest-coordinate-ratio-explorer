@@ -78,11 +78,17 @@ function HomePage() {
           <div className="flex-1">
             <p className="font-display text-lg font-bold">Your Adventure Progress</p>
             <p className="text-sm text-muted-foreground">
-              {completedCount} of {totalCount} milestones completed
+              Milestone {completedCount}/{totalCount} completed
             </p>
             <Progress value={percent} className="mt-3 h-3" />
           </div>
-          <div className="font-display text-4xl font-extrabold text-primary">{percent}%</div>
+          <div className="flex items-center gap-6">
+            <div className="text-center">
+              <div className="font-display text-3xl font-extrabold text-cta">{scorePoints}</div>
+              <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">PTS</div>
+            </div>
+            <div className="font-display text-4xl font-extrabold text-primary">{percent}%</div>
+          </div>
         </CardContent>
       </Card>
 
