@@ -44,6 +44,7 @@ export function PestaRiaFeast() {
     if (allCorrect) {
       setWon(true);
       markComplete("final");
+      addPoints(50);
       blast();
     } else {
       setFeedback(
