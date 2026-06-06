@@ -31,6 +31,7 @@ export function TopBarActions() {
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
+  const [breakSeconds, setBreakSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -51,7 +52,7 @@ export function TopBarActions() {
   }, [isActive, timeLeft]);
 
   const startBreakTimer = () => {
-    setTimeLeft(breakMinutes * 60);
+    setTimeLeft(breakMinutes * 60 + breakSeconds);
     setIsActive(true);
     setIsOpen(false);
   };
