@@ -130,23 +130,54 @@ function AboutPage() {
         {/* 4. Project Credits */}
         <Card className="mint-card-shadow">
           <CardHeader>
-            <CardTitle>Project Credits</CardTitle>
+            <CardTitle className="font-display text-xl font-bold flex items-center gap-2 text-primary">
+              ✨ Project Development Team
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {[
-                { icon: <User className="h-5 w-5" />, label: "Developer", value: meta.developer },
-                { icon: <Building2 className="h-5 w-5" />, label: "Institution", value: meta.institution },
-                { icon: <CalendarDays className="h-5 w-5" />, label: "Academic Year", value: meta.academicYear },
-              ].map((c) => (
-                <div key={c.label} className="rounded-2xl bg-mint-50/60 p-5 text-center">
-                  <span className="mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-mint-100 text-primary">
-                    {c.icon}
-                  </span>
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground">{c.label}</p>
-                  <p className="font-display font-bold">{c.value}</p>
+          <CardContent className="space-y-6">
+            {/* Dynamic Developers Grid */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {meta.developers?.map((dev, idx) => (
+                <div key={dev.name} className="flex items-center gap-4 rounded-2xl bg-gradient-to-br from-mint-50/60 to-background p-5 border border-primary/10">
+                  <img
+                    src={dev.image}
+                    alt={dev.name}
+                    className="w-16 h-16 rounded-2xl object-cover border-2 border-primary/20 shadow-sm"
+                    onError={(e) => {
+                      e.currentTarget.src = idx === 0
+                        ? "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150"
+                        : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150";
+                    }}
+                  />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wide text-primary/70">Co-Developer ({meta.course})</p>
+                    <p className="font-display text-lg font-extrabold text-foreground">{dev.name}</p>
+                    <p className="text-xs text-muted-foreground">IPG Kampus Rajang</p>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            {/* Campus & Academic Meta Info Footer */}
+            <div className="grid gap-4 sm:grid-cols-2 pt-2 border-t border-dashed border-slate-200">
+              <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-100 text-primary">
+                  <Building2 className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Institution</p>
+                  <p className="text-xs font-bold text-foreground">{meta.institution}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-100 text-primary">
+                  <CalendarDays className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Academic Year</p>
+                  <p className="text-xs font-bold text-foreground">{meta.academicYear}</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
