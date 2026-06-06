@@ -34,7 +34,7 @@ function StudentFeedbackView() {
 
   const completeJourney = () => {
     markComplete("reflection");
-    addPoints(100);
+    addPoints(500);
     blast();
     setCelebrate(true);
   };

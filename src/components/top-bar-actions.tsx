@@ -31,6 +31,7 @@ export function TopBarActions() {
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
+  const [breakSeconds, setBreakSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -51,7 +52,7 @@ export function TopBarActions() {
   }, [isActive, timeLeft]);
 
   const startBreakTimer = () => {
-    setTimeLeft(breakMinutes * 60);
+    setTimeLeft(breakMinutes * 60 + breakSeconds);
     setIsActive(true);
     setIsOpen(false);
   };
@@ -97,15 +98,28 @@ export function TopBarActions() {
               intensive math exploration.
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-sm font-medium">Minutes:</span>
-              <Input
-                type="number"
-                min={1}
-                max={60}
-                value={breakMinutes}
-                onChange={(e) => setBreakMinutes(Number(e.target.value))}
-                className="w-20 rounded-xl"
-              />
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium">Minutes:</span>
+                <Input
+                  type="number"
+                  min={0}
+                  max={60}
+                  value={breakMinutes}
+                  onChange={(e) => setBreakMinutes(Number(e.target.value))}
+                  className="w-20 rounded-xl"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium">Seconds:</span>
+                <Input
+                  type="number"
+                  min={0}
+                  max={59}
+                  value={breakSeconds}
+                  onChange={(e) => setBreakSeconds(Number(e.target.value))}
+                  className="w-20 rounded-xl"
+                />
+              </div>
             </div>
             <Button onClick={startBreakTimer} className="w-full rounded-xl font-bold">
               Start Countdown
@@ -121,7 +135,7 @@ export function TopBarActions() {
 
       {/* Fullscreen Break Screen Overlay */}
       {showOverlay && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/60 p-4 backdrop-blur-md">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background/80 p-4 backdrop-blur-md">
           <div className="w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl">
             <div className="mb-4 text-6xl">🌴</div>
             <h2 className="font-display text-2xl font-extrabold text-foreground">
