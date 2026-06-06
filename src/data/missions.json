@@ -134,6 +134,14 @@
       "explore": {
         "tool": "GeoGebra Classroom",
         "embedUrl": "https://www.geogebra.org/classroom/fm5gudkc",
+        "lumiUrl": "https://app.lumi.education/api/v1/run/hKbQo9/embed",
+        "smoothieIngredients": [
+          "1 cup milk",
+          "100g blueberries",
+          "200g strawberries",
+          "2 tablespoons condensed milk, sweetened",
+          "4 oatmeal cookies"
+        ],
         "note": "Scale the recipe and watch both quantities change in proportion."
       },
       "practice": {
