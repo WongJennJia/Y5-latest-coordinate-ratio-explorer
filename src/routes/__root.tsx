@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { TopBarActions } from "@/components/top-bar-actions";
 import { ProgressProvider } from "@/lib/progress-context";
 
 function NotFoundComponent() {
@@ -140,6 +141,7 @@ function RootComponent() {
                 <span className="hidden text-xs text-muted-foreground sm:inline">
                   Coordinates · Ratio · Proportion Adventure
                 </span>
+                <TopBarActions />
               </header>
               <main className="flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
                 {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
