@@ -1,4 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, type DetailedHTMLProps, type HTMLAttributes } from "react";
+
+declare module "react" {
+  namespace JSX {
+    interface IntrinsicElements {
+      "dotlottie-wc": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
+        src?: string;
+        autoplay?: string;
+        loop?: string;
+      };
+    }
+  }
+}
 
 const SCRIPT_SRC = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js";
 
@@ -37,11 +49,10 @@ export function LottieEmbed({
     scriptInjected = true;
   }, []);
 
-  // @ts-expect-error - custom element provided by the dotlottie web component
   return (
     <dotlottie-wc
       src={src}
-      class={className}
+      className={className}
       autoplay={autoplay ? "" : undefined}
       loop={loop ? "" : undefined}
       role="img"
