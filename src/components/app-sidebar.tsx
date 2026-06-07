@@ -139,6 +139,13 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
+        {!collapsed && (
+          <div className="m-1 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60">
+            <div className="h-28 w-full">
+              <LottieEmbed src={SINGING_TEACHER_LOTTIE} ariaLabel="Two singing teachers animation" />
+            </div>
+          </div>
+        )}
         {!collapsed && currentRole === "teacher" && (
           <div className="m-1 rounded-xl border border-primary/15 bg-mint-50/60 p-3">
             <div className="mb-2 flex items-center justify-between">
