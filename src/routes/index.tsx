@@ -16,8 +16,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { LottieEmbed } from "@/components/LottieEmbed";
 import { useProgress, type MissionId } from "@/lib/progress-context";
 import missionsData from "@/data/missions.json";
+
+// PLACEHOLDER public Lottie animations — swap for your real embed URLs.
+const CAT_LOTTIE = "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie";
+const MOODS = [
+  { emoji: "😄", label: "Great" },
+  { emoji: "🙂", label: "Good" },
+  { emoji: "😐", label: "Okay" },
+  { emoji: "😴", label: "Tired" },
+  { emoji: "😟", label: "Stuck" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
