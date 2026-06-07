@@ -16,8 +16,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { LottieEmbed } from "@/components/LottieEmbed";
 import { useProgress, type MissionId } from "@/lib/progress-context";
 import missionsData from "@/data/missions.json";
+
+// PLACEHOLDER public Lottie animations — swap for your real embed URLs.
+const CAT_LOTTIE = "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie";
+const MOODS = [
+  { emoji: "😄", label: "Great" },
+  { emoji: "🙂", label: "Good" },
+  { emoji: "😐", label: "Okay" },
+  { emoji: "😴", label: "Tired" },
+  { emoji: "😟", label: "Stuck" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,31 +57,60 @@ function HomePage() {
   return (
     <div className="mx-auto max-w-6xl">
       {/* Hero */}
-      <section className="relative mb-10 overflow-hidden rounded-3xl bg-gradient-to-br from-mint-100 to-mint-200 p-8 sm:p-12 mint-card-shadow">
+      <section className="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-br from-mint-100 to-mint-200 p-8 sm:p-12 mint-card-shadow">
         <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-primary/15 blur-2xl" />
-        <div className="relative max-w-2xl">
-          <Badge className="mb-4 gap-1.5 bg-primary text-primary-foreground">
-            <Sparkles className="h-3.5 w-3.5" /> {missionsData.meta.curriculum}
-          </Badge>
-          <h1 className="font-display text-4xl font-extrabold leading-tight text-foreground sm:text-5xl">
-            Welcome, Explorer!
-          </h1>
-          <p className="mt-3 text-base text-foreground/70 sm:text-lg">
-            Begin your <strong>{missionsData.meta.subtitle}</strong>. Complete each mission to unlock
-            the next and reach the Pesta Ria Sekolah Final Challenge.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild className="bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
-              <Link to="/getting-started" className="gap-1.5">
-                <Rocket className="h-4 w-4" /> Start Adventure
-              </Link>
-            </Button>
-            <Button asChild variant="secondary">
-              <Link to="/coordinates">Jump to Missions</Link>
-            </Button>
+        <div className="relative grid items-center gap-8 lg:grid-cols-2">
+          {/* Left: text content */}
+          <div className="text-left">
+            <Badge className="mb-4 gap-1.5 bg-primary text-primary-foreground">
+              <Sparkles className="h-3.5 w-3.5" /> {missionsData.meta.curriculum}
+            </Badge>
+            <h1 className="font-display text-4xl font-extrabold leading-tight text-foreground sm:text-5xl">
+              Welcome, Explorer!
+            </h1>
+            <p className="mt-3 text-base text-foreground/70 sm:text-lg">
+              Begin your <strong>{missionsData.meta.subtitle}</strong>. Complete each mission to unlock
+              the next and reach the Pesta Ria Sekolah Final Challenge.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild className="bg-cta text-cta-foreground cta-shadow hover:bg-cta/90">
+                <Link to="/getting-started" className="gap-1.5">
+                  <Rocket className="h-4 w-4" /> Start Adventure
+                </Link>
+              </Button>
+              <Button asChild variant="secondary">
+                <Link to="/coordinates">Jump to Missions</Link>
+              </Button>
+            </div>
+          </div>
+          {/* Right: running cat Lottie */}
+          <div className="mx-auto h-48 w-48 sm:h-60 sm:w-60 lg:h-72 lg:w-72">
+            <LottieEmbed src={CAT_LOTTIE} ariaLabel="Running cat animation" />
           </div>
         </div>
       </section>
+
+      {/* Mood check-in */}
+      <Card className="mb-10 mint-card-shadow">
+        <CardContent className="py-6 text-center">
+          <p className="font-display text-lg font-bold text-foreground">
+            How are you feeling today, Explorer?
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            {MOODS.map((m) => (
+              <button
+                key={m.label}
+                type="button"
+                className="flex flex-col items-center gap-1 rounded-2xl border border-primary/15 bg-mint-50/60 px-4 py-3 transition-transform hover:-translate-y-1 hover:bg-mint-100"
+              >
+                <span className="text-3xl">{m.emoji}</span>
+                <span className="text-xs font-medium text-slate-800 dark:text-slate-100">{m.label}</span>
+              </button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
 
       {/* Progress */}
       <Card className="mb-10 mint-card-shadow">
