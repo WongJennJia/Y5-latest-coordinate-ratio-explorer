@@ -140,9 +140,11 @@ export function AppSidebar() {
       <SidebarFooter>
         {!collapsed && (
           <div className="m-1 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60">
-            <div className="h-28 w-full">
-              <LottieEmbed src={SINGING_TEACHER_LOTTIE} ariaLabel="Two singing teachers animation" />
-            </div>
+            <LottieEmbed
+              src="https://lottie.host/b679617b-a608-40da-b788-89bb8328d470/YmV3JBftEm.lottie"
+              className="w-full h-32 bg-transparent"
+              ariaLabel="Singing Teachers"
+            />
           </div>
         )}
         {!collapsed && currentRole === "teacher" && (
