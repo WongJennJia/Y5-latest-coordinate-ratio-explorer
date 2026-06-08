@@ -55,6 +55,19 @@ export function TopBarActions() {
     }
   };
 
+  // --- Accessibility Text Scaler State (100% -> 200%) ---
+  const [textScale, setTextScale] = useState(100);
+
+  useEffect(() => {
+    document.documentElement.style.fontSize = textScale === 100 ? "" : `${textScale}%`;
+  }, [textScale]);
+
+  const cycleTextScale = () => {
+    setTextScale((prev) => (prev >= 200 ? 100 : prev + 25));
+  };
+
+
+
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
