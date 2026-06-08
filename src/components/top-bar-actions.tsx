@@ -174,14 +174,29 @@ export function TopBarActions() {
         size="icon"
         onClick={toggleMusic}
         aria-label={isPlaying ? "Pause background music" : "Play background music"}
+        className={isPlaying ? "text-primary animate-pulse" : ""}
       >
-        {isPlaying ? <Music className="h-5 w-5 text-primary" /> : <VolumeX className="h-5 w-5" />}
+        {isPlaying ? <Music className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+      </Button>
+
+      {/* Accessibility Text Scaler */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={cycleTextScale}
+        aria-label={`Text size ${textScale}%`}
+        title={`Text size: ${textScale}%`}
+        className="gap-1 px-2 font-bold"
+      >
+        <Type className="h-5 w-5" />
+        <span className="text-[10px] font-bold tabular-nums">{textScale}%</span>
       </Button>
 
       {/* Dark Mode Toggle */}
       <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
+
 
 
       {/* Fullscreen Break Screen Overlay */}
