@@ -155,10 +155,21 @@ export function TopBarActions() {
         </DialogContent>
       </Dialog>
 
+      {/* Background Music Toggle */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleMusic}
+        aria-label={isPlaying ? "Pause background music" : "Play background music"}
+      >
+        {isPlaying ? <Music className="h-5 w-5 text-primary" /> : <VolumeX className="h-5 w-5" />}
+      </Button>
+
       {/* Dark Mode Toggle */}
       <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
+
 
       {/* Fullscreen Break Screen Overlay */}
       {showOverlay && (
