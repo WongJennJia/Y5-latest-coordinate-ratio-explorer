@@ -185,6 +185,16 @@ export function MissionContent({
                 <p className="mt-3 text-center text-xs text-muted-foreground">
                   Tip: Click the green flag inside the Scratch player to test coordinates inside the game viewport!
                 </p>
+                <div className="mt-4 flex justify-center">
+                  <a
+                    href="https://scratch.mit.edu/projects/1316563434"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-xl bg-cta px-5 py-2.5 text-sm font-bold text-cta-foreground shadow-md transition-transform hover:opacity-90 active:scale-[0.98]"
+                  >
+                    🚀 Open Full Scratch Explorer in New Tab
+                  </a>
+                </div>
               </CardContent>
             </Card>
           )}
