@@ -30,8 +30,7 @@ import {
 import { useProgress, type MissionId } from "@/lib/progress-context";
 import { LottieEmbed } from "@/components/LottieEmbed";
 
-// PLACEHOLDER public Lottie — swap for your TwoSingingTeacher embed URL.
-const SINGING_TEACHER_LOTTIE = "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie";
+
 
 type NavItem = {
   title: string;
@@ -141,9 +140,11 @@ export function AppSidebar() {
       <SidebarFooter>
         {!collapsed && (
           <div className="m-1 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60">
-            <div className="h-28 w-full">
-              <LottieEmbed src={SINGING_TEACHER_LOTTIE} ariaLabel="Two singing teachers animation" />
-            </div>
+            <LottieEmbed
+              src="https://lottie.host/b679617b-a608-40da-b788-89bb8328d470/YmV3JBftEm.lottie"
+              className="w-full h-32 bg-transparent"
+              ariaLabel="Singing Teachers"
+            />
           </div>
         )}
         {!collapsed && currentRole === "teacher" && (

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Coffee, Timer, X, Music, VolumeX } from "lucide-react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -54,6 +54,19 @@ export function TopBarActions() {
       setIsPlaying(true);
     }
   };
+
+  // --- Accessibility Text Scaler State (100% -> 200%) ---
+  const [textScale, setTextScale] = useState(100);
+
+  useEffect(() => {
+    document.documentElement.style.fontSize = textScale === 100 ? "" : `${textScale}%`;
+  }, [textScale]);
+
+  const cycleTextScale = () => {
+    setTextScale((prev) => (prev >= 200 ? 100 : prev + 25));
+  };
+
+
 
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
@@ -161,8 +174,22 @@ export function TopBarActions() {
         size="icon"
         onClick={toggleMusic}
         aria-label={isPlaying ? "Pause background music" : "Play background music"}
+        className={isPlaying ? "text-primary animate-pulse" : ""}
       >
-        {isPlaying ? <Music className="h-5 w-5 text-primary" /> : <VolumeX className="h-5 w-5" />}
+        {isPlaying ? <Music className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+      </Button>
+
+      {/* Accessibility Text Scaler */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={cycleTextScale}
+        aria-label={`Text size ${textScale}%`}
+        title={`Text size: ${textScale}%`}
+        className="gap-1 px-2 font-bold"
+      >
+        <Type className="h-5 w-5" />
+        <span className="text-[10px] font-bold tabular-nums">{textScale}%</span>
       </Button>
 
       {/* Dark Mode Toggle */}
@@ -171,27 +198,39 @@ export function TopBarActions() {
       </Button>
 
 
-      {/* Fullscreen Break Screen Overlay */}
-      {showOverlay && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/95 p-6 text-center backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl">
-            <div className="mb-4 text-6xl">🌴</div>
-            <h2 className="font-display text-2xl font-extrabold text-foreground">
-              Time to Rest Your Eyes!
-            </h2>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Great job exploring math! Stand up, stretch your body, look out the window at something
-              green, and grab a glass of water for 5 minutes.
-            </p>
-            <Button
-              onClick={() => setShowOverlay(false)}
-              className="mt-6 w-full rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20"
-            >
-              I am Back &amp; Refreshed!
-            </Button>
-          </div>
-        </div>
-      )}
+
+      {/* Fullscreen Break Screen Overlay — Strict Modal High-Layer Hijack */}
+      <Dialog
+        open={showOverlay}
+        onOpenChange={(open) => {
+          if (!open) setShowOverlay(false);
+        }}
+      >
+        <DialogContent
+          className="z-[9999] w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl [&>button]:hidden"
+          onInteractOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+        >
+          <DialogHeader className="sr-only">
+            <DialogTitle>Time to Rest Your Eyes!</DialogTitle>
+          </DialogHeader>
+          <div className="mb-4 text-6xl">🌴</div>
+          <h2 className="font-display text-2xl font-extrabold text-foreground">
+            Time to Rest Your Eyes!
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Great job exploring math! Stand up, stretch your body, look out the window at something
+            green, and grab a glass of water for 5 minutes.
+          </p>
+          <Button
+            onClick={() => setShowOverlay(false)}
+            className="mt-6 w-full rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98] cursor-pointer h-11"
+          >
+            I am Back &amp; Refreshed!
+          </Button>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }

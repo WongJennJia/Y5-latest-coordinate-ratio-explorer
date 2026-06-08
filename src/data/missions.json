@@ -8,8 +8,8 @@
     "videoId": "fEYWr2CBjnA",
     "studentFeedbackFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeoDA4-mmGPt1e7-lajYeshgPaWa8S4krzN5Dnw2uiV3fH6eA/viewform?embedded=true",
     "developers": [
-      { "name": "Wong Jenn Jia", "image": "/developer1.png" },
-      { "name": "Shyafina Soleha", "image": "/developer2.png" }
+      { "name": "Wong Jenn Jia", "image": "/developer1.png", "email": "jennjiawong@gmail.com" },
+      { "name": "Shyafina Soleha", "image": "/developer2.png", "email": "schafina98@gmail.com" }
     ],
     "institution": "Institut Pendidikan Guru Kampus Rajang",
     "academicYear": "2025 / 2026",
