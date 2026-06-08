@@ -30,8 +30,7 @@ import {
 import { useProgress, type MissionId } from "@/lib/progress-context";
 import { LottieEmbed } from "@/components/LottieEmbed";
 
-// PLACEHOLDER public Lottie — swap for your TwoSingingTeacher embed URL.
-const SINGING_TEACHER_LOTTIE = "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie";
+const SINGING_TEACHER_LOTTIE = "https://lottie.host/b679617b-a608-40da-b788-89bb8328d470/YmV3JBftEm.lottie";
 
 type NavItem = {
   title: string;
