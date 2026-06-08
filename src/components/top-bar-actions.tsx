@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Sun, Moon, Coffee, Timer, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import adventureMusic from "@/assets/adventure-music.mp3.asset.json";
 
 export function TopBarActions() {
   // --- Dark Mode State ---
@@ -25,6 +26,32 @@ export function TopBarActions() {
     } else {
       document.documentElement.classList.add("dark");
       setIsDark(true);
+    }
+  };
+
+  // --- Background Music State ---
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(adventureMusic.url);
+      audioRef.current.loop = true;
+    }
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      void audio.play();
+      setIsPlaying(true);
     }
   };
 
@@ -128,10 +155,21 @@ export function TopBarActions() {
         </DialogContent>
       </Dialog>
 
+      {/* Background Music Toggle */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleMusic}
+        aria-label={isPlaying ? "Pause background music" : "Play background music"}
+      >
+        {isPlaying ? <Music className="h-5 w-5 text-primary" /> : <VolumeX className="h-5 w-5" />}
+      </Button>
+
       {/* Dark Mode Toggle */}
       <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
+
 
       {/* Fullscreen Break Screen Overlay */}
       {showOverlay && (
