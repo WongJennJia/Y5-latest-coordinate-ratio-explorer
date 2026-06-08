@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Sun, Moon, Coffee, Timer, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import adventureMusic from "@/assets/adventure-music.mp3.asset.json";
 
 export function TopBarActions() {
   // --- Dark Mode State ---
