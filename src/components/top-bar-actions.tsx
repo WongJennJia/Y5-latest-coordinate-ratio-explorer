@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Coffee, Timer, X, Music, VolumeX } from "lucide-react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
