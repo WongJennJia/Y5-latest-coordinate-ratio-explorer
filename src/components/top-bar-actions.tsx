@@ -29,6 +29,32 @@ export function TopBarActions() {
     }
   };
 
+  // --- Background Music State ---
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(adventureMusic.url);
+      audioRef.current.loop = true;
+    }
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      void audio.play();
+      setIsPlaying(true);
+    }
+  };
+
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
   const [breakMinutes, setBreakMinutes] = useState(5);
