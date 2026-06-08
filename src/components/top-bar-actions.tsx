@@ -199,27 +199,38 @@ export function TopBarActions() {
 
 
 
-      {/* Fullscreen Break Screen Overlay */}
-      {showOverlay && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/95 p-6 text-center backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl">
-            <div className="mb-4 text-6xl">🌴</div>
-            <h2 className="font-display text-2xl font-extrabold text-foreground">
-              Time to Rest Your Eyes!
-            </h2>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Great job exploring math! Stand up, stretch your body, look out the window at something
-              green, and grab a glass of water for 5 minutes.
-            </p>
-            <Button
-              onClick={() => setShowOverlay(false)}
-              className="mt-6 w-full rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20"
-            >
-              I am Back &amp; Refreshed!
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* Fullscreen Break Screen Overlay — Strict Modal High-Layer Hijack */}
+      <Dialog
+        open={showOverlay}
+        onOpenChange={(open) => {
+          if (!open) setShowOverlay(false);
+        }}
+      >
+        <DialogContent
+          className="z-[9999] w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl [&>button]:hidden"
+          onInteractOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+        >
+          <DialogHeader className="sr-only">
+            <DialogTitle>Time to Rest Your Eyes!</DialogTitle>
+          </DialogHeader>
+          <div className="mb-4 text-6xl">🌴</div>
+          <h2 className="font-display text-2xl font-extrabold text-foreground">
+            Time to Rest Your Eyes!
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Great job exploring math! Stand up, stretch your body, look out the window at something
+            green, and grab a glass of water for 5 minutes.
+          </p>
+          <Button
+            onClick={() => setShowOverlay(false)}
+            className="mt-6 w-full rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98] cursor-pointer h-11"
+          >
+            I am Back &amp; Refreshed!
+          </Button>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
