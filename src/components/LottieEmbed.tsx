@@ -15,7 +15,6 @@ declare module "react" {
 const SCRIPT_SRC = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js";
 let scriptInjected = false;
 
-// Safe accessor mapping player methods down to the native Web Component instance context
 function getDotLottie(el: HTMLElement): any {
   return (el as any)?.dotLottie ?? null;
 }
@@ -35,7 +34,7 @@ export function LottieEmbed({
 }) {
   const ref = useRef<HTMLElement | null>(null);
 
-  // Injects critical dependencies scripts safely client-side
+  // Core web component script initialization
   useEffect(() => {
     if (scriptInjected || typeof document === "undefined") return;
     if (document.querySelector(`script[src="${SCRIPT_SRC}"]`)) {
@@ -49,18 +48,23 @@ export function LottieEmbed({
     scriptInjected = true;
   }, []);
 
-  // Safeguard: Wait until the web component reports it is ready, then fire playing trigger securely
+  // Fix 1: Component mount and router transition listener
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const onLoad = () => {
-      getDotLottie(el)?.play();
+    const tryPlay = () => {
+      const dl = getDotLottie(el);
+      if (dl) {
+        dl.play();
+      } else {
+        el.addEventListener("load", () => getDotLottie(el)?.play(), { once: true });
+      }
     };
-    el.addEventListener("load", onLoad);
-    return () => el.removeEventListener("load", onLoad);
+    const timer = setTimeout(tryPlay, 100);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Fix 1: Flawlessly resume animation playback through internal sub-instance upon tab reactivation
+  // Fix 1b: Tab focus visibility tracking hooks
   useEffect(() => {
     const handleVisibility = () => {
       if (!document.hidden && ref.current) {
@@ -71,7 +75,7 @@ export function LottieEmbed({
     return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
-  // Fix 2: Eradicate stretching and layout freezes on Sidebar events by re-evaluating layout boundaries via internal .dotLottie reference
+  // Fix 2: Layout resize handler with microtask source rebind fallback
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof ResizeObserver === "undefined") return;
@@ -81,8 +85,18 @@ export function LottieEmbed({
         const { width, height } = entry.contentRect;
         if (width > 0 && height > 0) {
           const dl = getDotLottie(el);
-          dl?.resize();
-          dl?.play();
+          if (dl) {
+            dl.resize();
+            dl.play();
+          } else {
+            // Re-bind source path string across execution cycles to enforce browser dimension layout calculation
+            const player = el as any;
+            const currentSrc = player.src;
+            player.src = "";
+            requestAnimationFrame(() => {
+              player.src = currentSrc;
+            });
+          }
         }
       }
     });

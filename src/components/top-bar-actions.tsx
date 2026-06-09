@@ -55,7 +55,7 @@ export function TopBarActions() {
     }
   };
 
-  // --- Accessibility Text Scaler State (100% <-> 200% Two-Way Bound) ---
+  // --- Accessibility Text Scaler (100% <-> 200%) ---
   const [textScale, setTextScale] = useState(100);
 
   useEffect(() => {
@@ -79,14 +79,14 @@ export function TopBarActions() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayTimeLeft, setOverlayTimeLeft] = useState(0);
 
-  // Main countdown — monitors state vectors and drops digits at boundary limits
+  // Main countdown driver loop
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((time) => {
           const next = time - 1;
-          setOverlayTimeLeft(next);
+          if (showOverlay) setOverlayTimeLeft(next);
           return next;
         });
       }, 1000);
@@ -97,7 +97,7 @@ export function TopBarActions() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, timeLeft]);
+  }, [isActive, timeLeft, showOverlay]);
 
   const startBreakTimer = () => {
     const total = breakMinutes * 60 + breakSeconds;
@@ -105,7 +105,7 @@ export function TopBarActions() {
     setOverlayTimeLeft(total);
     setIsActive(true);
     setIsOpen(false);
-    setShowOverlay(true); // Pop overlay immediately upon click action
+    setShowOverlay(true);
   };
 
   const formatTime = (seconds: number) => {
@@ -123,7 +123,7 @@ export function TopBarActions() {
 
   return (
     <div className="ml-auto flex items-center gap-2">
-      {/* Active Timer Indicator */}
+      {/* Active Timer Pill Indicator */}
       {isActive && !showOverlay && (
         <div className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
           <Timer className="h-3.5 w-3.5" />
@@ -139,7 +139,7 @@ export function TopBarActions() {
         </div>
       )}
 
-      {/* Break Time Trigger Dialog */}
+      {/* Configuration Input Dialog Trigger */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button variant="ghost" size="icon" aria-label="Take a break">
@@ -153,7 +153,7 @@ export function TopBarActions() {
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
               Protect your eyes, Adventurer! Set a screen-break timer to rest and stretch after
-              intensive math exploration.
+              intensive exploration.
             </p>
             <div className="flex items-center gap-3">
               <div className="flex flex-col gap-1">
@@ -186,7 +186,7 @@ export function TopBarActions() {
         </DialogContent>
       </Dialog>
 
-      {/* Background Music Toggle */}
+      {/* Background Music */}
       <Button
         variant="ghost"
         size="icon"
@@ -197,7 +197,7 @@ export function TopBarActions() {
         {isPlaying ? <Music className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
       </Button>
 
-      {/* Accessibility Two-Way Text Scaler UI Block */}
+      {/* Font Scaler */}
       <div className="flex items-center gap-1 rounded-xl border border-border px-1 py-0.5">
         <Type className="h-4 w-4 text-muted-foreground" />
         <Button
@@ -225,12 +225,12 @@ export function TopBarActions() {
         </Button>
       </div>
 
-      {/* Dark Mode Toggle */}
+      {/* Dark Mode */}
       <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
 
-      {/* Fullscreen Break Screen Overlay — Strict High-Priority Layer Hijack */}
+      {/* Unified Screen Overlay View Framework */}
       <Dialog
         open={showOverlay}
         onOpenChange={(open) => {
@@ -245,25 +245,28 @@ export function TopBarActions() {
           <DialogHeader className="sr-only">
             <DialogTitle>Time to Rest Your Eyes!</DialogTitle>
           </DialogHeader>
+
           <div className="mb-4 text-6xl">🌴</div>
+
           <h2 className="font-display text-2xl font-extrabold text-foreground">
             Time to Rest Your Eyes!
           </h2>
 
-          {/* Dynamic presentation conditional layout block */}
-          {isActive && overlayTimeLeft > 0 ? (
+          {/* Integrated Live Ticker Block — Displayed inline inside unified view */}
+          {isActive && overlayTimeLeft > 0 && (
             <div className="mt-4">
               <div className="font-display text-5xl font-extrabold tabular-nums text-primary">
                 {formatTime(overlayTimeLeft)}
               </div>
               <p className="mt-1 text-sm text-muted-foreground">remaining</p>
             </div>
-          ) : (
-            <p className="mt-3 text-sm text-muted-foreground">
-              Great job exploring math! Stand up, stretch your body, look out the window at
-              something green, and grab a glass of water.
-            </p>
           )}
+
+          {/* Core Descriptive Text — Always rendered to prevent layout shifting splits */}
+          <p className="mt-3 text-sm text-muted-foreground">
+            Great job exploring math! Stand up, stretch your body, look out the window at something
+            green, and grab a glass of water.
+          </p>
 
           <Button
             onClick={handleDismissOverlay}
