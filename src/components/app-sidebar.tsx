@@ -138,15 +138,17 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        {!collapsed && (
-          <div className="m-1 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60">
-            <LottieEmbed
-              src="https://lottie.host/b679617b-a608-40da-b788-89bb8328d470/YmV3JBftEm.lottie"
-              className="w-full h-32 bg-transparent"
-              ariaLabel="Singing Teachers"
-            />
-          </div>
-        )}
+        <div
+          className={`w-36 shrink-0 mx-auto mb-4 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60 p-1 transition-all duration-200 ${
+            collapsed ? "invisible h-0 mb-0 p-0 border-0" : "visible h-36"
+          }`}
+        >
+          <LottieEmbed
+            src="/singing-teacher.json"
+            className="w-full h-full bg-transparent"
+            ariaLabel="Singing Teacher"
+          />
+        </div>
         {!collapsed && currentRole === "teacher" && (
           <div className="m-1 rounded-xl border border-primary/15 bg-mint-50/60 p-3">
             <div className="mb-2 flex items-center justify-between">
