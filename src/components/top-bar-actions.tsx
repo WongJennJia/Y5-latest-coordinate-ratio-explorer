@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type } from "lucide-react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -55,18 +55,20 @@ export function TopBarActions() {
     }
   };
 
-  // --- Accessibility Text Scaler State (100% -> 200%) ---
+  // --- Accessibility Text Scaler State (100% <-> 200% Two-Way Bound) ---
   const [textScale, setTextScale] = useState(100);
 
   useEffect(() => {
     document.documentElement.style.fontSize = textScale === 100 ? "" : `${textScale}%`;
   }, [textScale]);
 
-  const cycleTextScale = () => {
-    setTextScale((prev) => (prev >= 200 ? 100 : prev + 25));
+  const increaseTextScale = () => {
+    setTextScale((prev) => Math.min(prev + 25, 200));
   };
 
-
+  const decreaseTextScale = () => {
+    setTextScale((prev) => Math.max(prev - 25, 100));
+  };
 
   // --- Take a Break State ---
   const [isOpen, setIsOpen] = useState(false);
@@ -75,16 +77,22 @@ export function TopBarActions() {
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayTimeLeft, setOverlayTimeLeft] = useState(0);
 
+  // Main countdown — monitors state vectors and drops digits at boundary limits
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft((time) => time - 1);
+        setTimeLeft((time) => {
+          const next = time - 1;
+          setOverlayTimeLeft(next);
+          return next;
+        });
       }, 1000);
     } else if (timeLeft === 0 && isActive) {
       setIsActive(false);
-      setShowOverlay(true);
+      setOverlayTimeLeft(0);
     }
     return () => {
       if (interval) clearInterval(interval);
@@ -92,9 +100,12 @@ export function TopBarActions() {
   }, [isActive, timeLeft]);
 
   const startBreakTimer = () => {
-    setTimeLeft(breakMinutes * 60 + breakSeconds);
+    const total = breakMinutes * 60 + breakSeconds;
+    setTimeLeft(total);
+    setOverlayTimeLeft(total);
     setIsActive(true);
     setIsOpen(false);
+    setShowOverlay(true); // Pop overlay immediately upon click action
   };
 
   const formatTime = (seconds: number) => {
@@ -103,10 +114,17 @@ export function TopBarActions() {
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
+  const handleDismissOverlay = () => {
+    setShowOverlay(false);
+    setIsActive(false);
+    setTimeLeft(0);
+    setOverlayTimeLeft(0);
+  };
+
   return (
     <div className="ml-auto flex items-center gap-2">
       {/* Active Timer Indicator */}
-      {isActive && (
+      {isActive && !showOverlay && (
         <div className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
           <Timer className="h-3.5 w-3.5" />
           Rest in {formatTime(timeLeft)}
@@ -179,31 +197,44 @@ export function TopBarActions() {
         {isPlaying ? <Music className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
       </Button>
 
-      {/* Accessibility Text Scaler */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={cycleTextScale}
-        aria-label={`Text size ${textScale}%`}
-        title={`Text size: ${textScale}%`}
-        className="gap-1 px-2 font-bold"
-      >
-        <Type className="h-5 w-5" />
-        <span className="text-[10px] font-bold tabular-nums">{textScale}%</span>
-      </Button>
+      {/* Accessibility Two-Way Text Scaler UI Block */}
+      <div className="flex items-center gap-1 rounded-xl border border-border px-1 py-0.5">
+        <Type className="h-4 w-4 text-muted-foreground" />
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={decreaseTextScale}
+          disabled={textScale <= 100}
+          aria-label="Decrease text size"
+          className="h-8 w-8 rounded-lg"
+        >
+          <Minus className="h-4 w-4" />
+        </Button>
+        <span className="min-w-[3rem] text-center text-[11px] font-bold tabular-nums">
+          {textScale}%
+        </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={increaseTextScale}
+          disabled={textScale >= 200}
+          aria-label="Increase text size"
+          className="h-8 w-8 rounded-lg"
+        >
+          <Plus className="h-4 w-4" />
+        </Button>
+      </div>
 
       {/* Dark Mode Toggle */}
       <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label="Toggle dark mode">
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
 
-
-
-      {/* Fullscreen Break Screen Overlay — Strict Modal High-Layer Hijack */}
+      {/* Fullscreen Break Screen Overlay — Strict High-Priority Layer Hijack */}
       <Dialog
         open={showOverlay}
         onOpenChange={(open) => {
-          if (!open) setShowOverlay(false);
+          if (!open) handleDismissOverlay();
         }}
       >
         <DialogContent
@@ -218,19 +249,30 @@ export function TopBarActions() {
           <h2 className="font-display text-2xl font-extrabold text-foreground">
             Time to Rest Your Eyes!
           </h2>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Great job exploring math! Stand up, stretch your body, look out the window at something
-            green, and grab a glass of water for 5 minutes.
-          </p>
+
+          {/* Dynamic presentation conditional layout block */}
+          {isActive && overlayTimeLeft > 0 ? (
+            <div className="mt-4">
+              <div className="font-display text-5xl font-extrabold tabular-nums text-primary">
+                {formatTime(overlayTimeLeft)}
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground">remaining</p>
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-muted-foreground">
+              Great job exploring math! Stand up, stretch your body, look out the window at
+              something green, and grab a glass of water.
+            </p>
+          )}
+
           <Button
-            onClick={() => setShowOverlay(false)}
-            className="mt-6 w-full rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98] cursor-pointer h-11"
+            onClick={handleDismissOverlay}
+            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98]"
           >
-            I am Back &amp; Refreshed!
+            {isActive && overlayTimeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
           </Button>
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
