@@ -15,6 +15,11 @@ declare module "react" {
 const SCRIPT_SRC = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js";
 let scriptInjected = false;
 
+// Safe accessor mapping player methods down to the native Web Component instance context
+function getDotLottie(el: HTMLElement): any {
+  return (el as any)?.dotLottie ?? null;
+}
+
 export function LottieEmbed({
   src,
   className,
@@ -30,6 +35,7 @@ export function LottieEmbed({
 }) {
   const ref = useRef<HTMLElement | null>(null);
 
+  // Injects critical dependencies scripts safely client-side
   useEffect(() => {
     if (scriptInjected || typeof document === "undefined") return;
     if (document.querySelector(`script[src="${SCRIPT_SRC}"]`)) {
@@ -43,19 +49,29 @@ export function LottieEmbed({
     scriptInjected = true;
   }, []);
 
-  // Fix 1: replay when switching back to the tab
+  // Safeguard: Wait until the web component reports it is ready, then fire playing trigger securely
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onLoad = () => {
+      getDotLottie(el)?.play();
+    };
+    el.addEventListener("load", onLoad);
+    return () => el.removeEventListener("load", onLoad);
+  }, []);
+
+  // Fix 1: Flawlessly resume animation playback through internal sub-instance upon tab reactivation
   useEffect(() => {
     const handleVisibility = () => {
       if (!document.hidden && ref.current) {
-        const player = ref.current as any;
-        player?.play?.();
+        getDotLottie(ref.current)?.play();
       }
     };
     document.addEventListener("visibilitychange", handleVisibility);
     return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
-  // Fix 2: handle distortion after sidebar hide/show via ResizeObserver
+  // Fix 2: Eradicate stretching and layout freezes on Sidebar events by re-evaluating layout boundaries via internal .dotLottie reference
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof ResizeObserver === "undefined") return;
@@ -64,9 +80,9 @@ export function LottieEmbed({
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
         if (width > 0 && height > 0) {
-          const player = el as any;
-          player?.resize?.();
-          player?.play?.();
+          const dl = getDotLottie(el);
+          dl?.resize();
+          dl?.play();
         }
       }
     });
