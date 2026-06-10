@@ -77,32 +77,30 @@ export function TopBarActions() {
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayTimeLeft, setOverlayTimeLeft] = useState(0);
 
-  // Main countdown driver loop
+  // Main countdown driver loop - Utilizing standard clean pure side-effect disposal
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-    if (isActive && timeLeft > 0) {
+    if (isActive) {
       interval = setInterval(() => {
         setTimeLeft((time) => {
-          const next = time - 1;
-          if (showOverlay) setOverlayTimeLeft(next);
-          return next;
+          if (time <= 1) {
+            setIsActive(false);
+            return 0;
+          }
+          return time - 1;
         });
       }, 1000);
-    } else if (timeLeft === 0 && isActive) {
-      setIsActive(false);
-      setOverlayTimeLeft(0);
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, timeLeft, showOverlay]);
+  }, [isActive]);
 
   const startBreakTimer = () => {
     const total = breakMinutes * 60 + breakSeconds;
+    if (total <= 0) return;
     setTimeLeft(total);
-    setOverlayTimeLeft(total);
     setIsActive(true);
     setIsOpen(false);
     setShowOverlay(true);
@@ -115,10 +113,15 @@ export function TopBarActions() {
   };
 
   const handleDismissOverlay = () => {
-    setShowOverlay(false);
-    setIsActive(false);
-    setTimeLeft(0);
-    setOverlayTimeLeft(0);
+    if (isActive && timeLeft > 0) {
+      // "Continue Anyway": close overlay modal view but preserve background countdown tracking
+      setShowOverlay(false);
+    } else {
+      // "I am Back & Refreshed!": timer done or cancelled, tear down states fully
+      setShowOverlay(false);
+      setIsActive(false);
+      setTimeLeft(0);
+    }
   };
 
   return (
@@ -130,7 +133,10 @@ export function TopBarActions() {
           Rest in {formatTime(timeLeft)}
           <button
             type="button"
-            onClick={() => setIsActive(false)}
+            onClick={() => {
+              setIsActive(false);
+              setTimeLeft(0);
+            }}
             className="ml-1 cursor-pointer rounded-full p-0.5 hover:bg-amber-200 dark:hover:bg-amber-800"
             aria-label="Cancel timer"
           >
@@ -253,10 +259,10 @@ export function TopBarActions() {
           </h2>
 
           {/* Integrated Live Ticker Block — Displayed inline inside unified view */}
-          {isActive && overlayTimeLeft > 0 && (
+          {isActive && timeLeft > 0 && (
             <div className="mt-4">
               <div className="font-display text-5xl font-extrabold tabular-nums text-primary">
-                {formatTime(overlayTimeLeft)}
+                {formatTime(timeLeft)}
               </div>
               <p className="mt-1 text-sm text-muted-foreground">remaining</p>
             </div>
@@ -272,7 +278,7 @@ export function TopBarActions() {
             onClick={handleDismissOverlay}
             className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98]"
           >
-            {isActive && overlayTimeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
+            {isActive && timeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
           </Button>
         </DialogContent>
       </Dialog>

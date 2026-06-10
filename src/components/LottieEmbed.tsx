@@ -5,8 +5,8 @@ declare module "react" {
     interface IntrinsicElements {
       "dotlottie-wc": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
         src?: string;
-        autoplay?: string;
-        loop?: string;
+        autoplay?: boolean;
+        loop?: boolean;
       };
     }
   }
@@ -60,9 +60,9 @@ export function LottieEmbed({
         el.addEventListener("load", () => getDotLottie(el)?.play(), { once: true });
       }
     };
-    const timer = setTimeout(tryPlay, 100);
+    const timer = setTimeout(tryPlay, 150); // Route transition layout buffering
     return () => clearTimeout(timer);
-  }, []);
+  }, [src]);
 
   // Fix 1b: Tab focus visibility tracking hooks
   useEffect(() => {
@@ -89,7 +89,6 @@ export function LottieEmbed({
             dl.resize();
             dl.play();
           } else {
-            // Re-bind source path string across execution cycles to enforce browser dimension layout calculation
             const player = el as any;
             const currentSrc = player.src;
             player.src = "";
@@ -110,11 +109,11 @@ export function LottieEmbed({
       ref={ref as any}
       src={src}
       className={className}
-      autoplay={autoplay ? "" : undefined}
-      loop={loop ? "" : undefined}
+      autoplay={autoplay}
+      loop={loop}
       role="img"
       aria-label={ariaLabel}
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "100%", display: "block" }}
     />
   );
 }
