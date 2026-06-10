@@ -113,10 +113,15 @@ export function TopBarActions() {
   };
 
   const handleDismissOverlay = () => {
-    setShowOverlay(false);
-    setIsActive(false);
-    setTimeLeft(0);
-    setOverlayTimeLeft(0);
+    if (isActive && timeLeft > 0) {
+      // "Continue Anyway": close overlay modal view but preserve background countdown tracking
+      setShowOverlay(false);
+    } else {
+      // "I am Back & Refreshed!": timer done or cancelled, tear down states fully
+      setShowOverlay(false);
+      setIsActive(false);
+      setTimeLeft(0);
+    }
   };
 
   return (
