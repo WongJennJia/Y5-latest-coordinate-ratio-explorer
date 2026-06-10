@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type, Plus, Minus } from "lucide-react";
+import { Sun, Moon, Coffee, Timer, X, Music, VolumeX, Type, Plus, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -78,7 +78,7 @@ export function TopBarActions() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
 
-  // Main countdown driver loop - Utilizing standard clean pure side-effect disposal
+  // Main countdown driver loop
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (isActive) {
@@ -86,6 +86,7 @@ export function TopBarActions() {
         setTimeLeft((time) => {
           if (time <= 1) {
             setIsActive(false);
+            // Keep overlay open when natural timer finishes to present the "Energy Recharged" view state safely
             return 0;
           }
           return time - 1;
@@ -112,30 +113,29 @@ export function TopBarActions() {
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  const handleDismissOverlay = () => {
-    if (isActive && timeLeft > 0) {
-      // "Continue Anyway": close overlay modal view but preserve background countdown tracking
-      setShowOverlay(false);
-    } else {
-      // "I am Back & Refreshed!": timer done or cancelled, tear down states fully
-      setShowOverlay(false);
-      setIsActive(false);
+  // Unified controller to unconditionally break potential dialog locked traps
+  const handleManualDismiss = () => {
+    setShowOverlay(false);
+    if (!isActive) {
       setTimeLeft(0);
     }
   };
 
+  const isTimerRunning = isActive && timeLeft > 0;
+
   return (
     <div className="ml-auto flex items-center gap-2">
       {/* Active Timer Pill Indicator */}
-      {isActive && !showOverlay && (
+      {isTimerRunning && (
         <div className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
-          <Timer className="h-3.5 w-3.5" />
+          <Timer className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: "4s" }} />
           Rest in {formatTime(timeLeft)}
           <button
             type="button"
             onClick={() => {
               setIsActive(false);
               setTimeLeft(0);
+              setShowOverlay(false);
             }}
             className="ml-1 cursor-pointer rounded-full p-0.5 hover:bg-amber-200 dark:hover:bg-amber-800"
             aria-label="Cancel timer"
@@ -236,50 +236,61 @@ export function TopBarActions() {
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </Button>
 
-      {/* Unified Screen Overlay View Framework */}
-      <Dialog
-        open={showOverlay}
-        onOpenChange={(open) => {
-          if (!open) handleDismissOverlay();
-        }}
-      >
+      {/* Unified Screen Overlay View Framework - Fully Controlled and Visual-Protected */}
+      <Dialog open={showOverlay} onOpenChange={setShowOverlay}>
         <DialogContent
-          className="z-[9999] w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl [&>button]:hidden"
+          className="z-[9999] w-full max-w-md rounded-3xl border-2 border-primary/30 bg-card p-8 text-center shadow-2xl [&>button]:hidden max-h-[92vh] overflow-y-auto flex flex-col items-center justify-center gap-2"
           onInteractOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
           <DialogHeader className="sr-only">
-            <DialogTitle>Time to Rest Your Eyes!</DialogTitle>
+            <DialogTitle>
+              {isTimerRunning ? "Time to Rest Your Eyes!" : "Energy Recharged!"}
+            </DialogTitle>
           </DialogHeader>
 
-          <div className="mb-4 text-6xl">🌴</div>
+          {/* Dynamic Top Illustration Icon */}
+          <div className="mb-2 text-6xl animate-bounce flex items-center justify-center h-16 w-16" style={{ animationDuration: "3s" }}>
+            {isTimerRunning ? "🌴" : "✨"}
+          </div>
 
-          <h2 className="font-display text-2xl font-extrabold text-foreground">
-            Time to Rest Your Eyes!
+          {/* Dynamic Header Titles Based On Timer State */}
+          <h2 className="font-display text-2xl font-extrabold text-foreground tracking-tight">
+            {isTimerRunning ? "Time to Rest Your Eyes!" : "Let's Continue the Journey!"}
           </h2>
 
-          {/* Integrated Live Ticker Block — Displayed inline inside unified view */}
-          {isActive && timeLeft > 0 && (
-            <div className="mt-4">
-              <div className="font-display text-5xl font-extrabold tabular-nums text-primary">
+          {/* Dynamic Live Ticker Block */}
+          {isTimerRunning ? (
+            <div className="my-4 min-h-[80px] flex flex-col items-center justify-center">
+              <div className="font-display text-5xl font-extrabold tabular-nums text-primary tracking-tight">
                 {formatTime(timeLeft)}
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">remaining</p>
+              <p className="mt-1 text-xs text-muted-foreground uppercase tracking-wider font-bold">remaining</p>
+            </div>
+          ) : (
+            <div className="my-3 min-h-[40px] px-4 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200/50 flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-sm font-bold animate-pulse">
+              <Sparkles className="h-4 w-4" /> Ready to explore again!
             </div>
           )}
 
-          {/* Core Descriptive Text — Always rendered to prevent layout shifting splits */}
-          <p className="mt-3 text-sm text-muted-foreground">
-            Great job exploring math! Stand up, stretch your body, look out the window at something
-            green, and grab a glass of water.
+          {/* Contextual Description text to avoid layout layout breaking splits */}
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+            {isTimerRunning 
+              ? "Great job exploring math! Stand up, stretch your body, look out the window at something green, and grab a glass of water."
+              : "Your eyes are rested and your brain is fully recharged. Your mathematical adventure waits for your return!"
+            }
           </p>
 
-          <Button
-            onClick={handleDismissOverlay}
-            className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98]"
-          >
-            {isActive && timeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
-          </Button>
+          {/* Action Interactive Call To Actions (Ensured Block Layout Positioning) */}
+          <div className="mt-4 w-full pt-2">
+            <Button
+              type="button"
+              onClick={handleManualDismiss}
+              className="h-11 w-full cursor-pointer rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98]"
+            >
+              {isTimerRunning ? "Continue Anyway" : "Return to Adventure!"}
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
