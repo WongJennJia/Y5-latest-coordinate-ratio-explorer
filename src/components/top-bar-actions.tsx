@@ -77,32 +77,30 @@ export function TopBarActions() {
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayTimeLeft, setOverlayTimeLeft] = useState(0);
 
-  // Main countdown driver loop
+  // Main countdown driver loop - Utilizing standard clean pure side-effect disposal
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-    if (isActive && timeLeft > 0) {
+    if (isActive) {
       interval = setInterval(() => {
         setTimeLeft((time) => {
-          const next = time - 1;
-          if (showOverlay) setOverlayTimeLeft(next);
-          return next;
+          if (time <= 1) {
+            setIsActive(false);
+            return 0;
+          }
+          return time - 1;
         });
       }, 1000);
-    } else if (timeLeft === 0 && isActive) {
-      setIsActive(false);
-      setOverlayTimeLeft(0);
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, timeLeft, showOverlay]);
+  }, [isActive]);
 
   const startBreakTimer = () => {
     const total = breakMinutes * 60 + breakSeconds;
+    if (total <= 0) return;
     setTimeLeft(total);
-    setOverlayTimeLeft(total);
     setIsActive(true);
     setIsOpen(false);
     setShowOverlay(true);
