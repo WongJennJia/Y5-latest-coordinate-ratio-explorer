@@ -256,10 +256,10 @@ export function TopBarActions() {
           </h2>
 
           {/* Integrated Live Ticker Block — Displayed inline inside unified view */}
-          {isActive && overlayTimeLeft > 0 && (
+          {isActive && timeLeft > 0 && (
             <div className="mt-4">
               <div className="font-display text-5xl font-extrabold tabular-nums text-primary">
-                {formatTime(overlayTimeLeft)}
+                {formatTime(timeLeft)}
               </div>
               <p className="mt-1 text-sm text-muted-foreground">remaining</p>
             </div>
