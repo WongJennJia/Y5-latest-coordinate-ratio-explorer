@@ -275,7 +275,7 @@ export function TopBarActions() {
             onClick={handleDismissOverlay}
             className="mt-6 h-11 w-full cursor-pointer rounded-xl bg-primary font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:opacity-90 active:scale-[0.98]"
           >
-            {isActive && overlayTimeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
+            {isActive && timeLeft > 0 ? "Continue Anyway" : "I am Back & Refreshed!"}
           </Button>
         </DialogContent>
       </Dialog>
