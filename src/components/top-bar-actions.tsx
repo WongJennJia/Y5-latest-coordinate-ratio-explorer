@@ -133,7 +133,10 @@ export function TopBarActions() {
           Rest in {formatTime(timeLeft)}
           <button
             type="button"
-            onClick={() => setIsActive(false)}
+            onClick={() => {
+              setIsActive(false);
+              setTimeLeft(0);
+            }}
             className="ml-1 cursor-pointer rounded-full p-0.5 hover:bg-amber-200 dark:hover:bg-amber-800"
             aria-label="Cancel timer"
           >
