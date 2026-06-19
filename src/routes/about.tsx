@@ -138,11 +138,14 @@ function AboutPage() {
             {/* Dynamic Developers Grid */}
             <div className="grid gap-4 sm:grid-cols-2">
               {meta.developers?.map((dev, idx) => (
-                <div key={dev.name} className="flex items-center gap-4 rounded-2xl bg-gradient-to-br from-mint-50/60 to-background p-5 border border-primary/10">
+                <div
+                  key={dev.name}
+                  className="flex items-center gap-4 rounded-2xl bg-muted/50 p-5 border border-border/40"
+                >
                   <img
                     src={dev.image}
                     alt={dev.name}
-                    className="w-16 h-16 rounded-2xl object-cover border-2 border-primary/20 shadow-sm"
+                    className="w-16 h-16 rounded-2xl object-cover border-2 border-border/40 shadow-sm"
                     onError={(e) => {
                       e.currentTarget.src = idx === 0
                         ? "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150"
@@ -150,32 +153,50 @@ function AboutPage() {
                     }}
                   />
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-primary/70">Co-Developer ({meta.course})</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                      Co-Developer ({meta.course})
+                    </p>
                     <p className="font-display text-lg font-extrabold text-foreground">{dev.name}</p>
-                    <p className="text-xs text-muted-foreground">IPG Kampus Rajang</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Campus & Academic Meta Info Footer */}
-            <div className="grid gap-4 sm:grid-cols-2 pt-2 border-t border-dashed border-slate-200">
-              <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+            {/* Dynamic Social Footer without Hardcoded Emails */}
+            <div className="rounded-xl bg-muted/50 p-4 text-center text-sm font-medium text-foreground">
+              ✉️ Get social with us! Gmail:{" "}
+              {meta.developers?.map((dev, idx) => (
+                <span key={dev.email}>
+                  <a href={`mailto:${dev.email}`} className="font-semibold text-primary hover:underline">
+                    {dev.email}
+                  </a>
+                  {idx < (meta.developers.length - 1) && " · "}
+                </span>
+              ))}
+            </div>
+
+            {/* Campus & Academic Meta Info Footer with Dynamic Semantic Tokens */}
+            <div className="grid gap-4 sm:grid-cols-2 pt-2 border-t border-border/40">
+              <div className="flex items-center gap-3 rounded-xl bg-muted/50 p-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-100 text-primary">
                   <Building2 className="h-4 w-4" />
                 </span>
                 <div>
-                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Institution</p>
-                  <p className="text-xs font-bold text-foreground">{meta.institution}</p>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">
+                    Institution
+                  </p>
+                  <p className="text-xs font-medium text-foreground">{meta.institution}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
+              <div className="flex items-center gap-3 rounded-xl bg-muted/50 p-3">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-100 text-primary">
                   <CalendarDays className="h-4 w-4" />
                 </span>
                 <div>
-                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Academic Year</p>
-                  <p className="text-xs font-bold text-foreground">{meta.academicYear}</p>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">
+                    Academic Year
+                  </p>
+                  <p className="text-xs font-medium text-foreground">{meta.academicYear}</p>
                 </div>
               </div>
             </div>

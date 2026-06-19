@@ -28,6 +28,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useProgress, type MissionId } from "@/lib/progress-context";
+import { LottieEmbed } from "@/components/LottieEmbed";
+
+
 
 type NavItem = {
   title: string;
@@ -44,11 +47,11 @@ const studentNav: NavItem[] = [
   { title: "Proportion", url: "/proportion", icon: Percent, missionId: "proportion" },
   { title: "Final Challenge", url: "/final-challenge", icon: Trophy, missionId: "final" },
   { title: "Mission Reflection", url: "/student-feedback", icon: ClipboardCheck },
+  { title: "About Project", url: "/about", icon: Info },
 ];
 
 const appraisalNav: NavItem[] = [
   { title: "Teacher Reflection", url: "/reflection", icon: BookOpen },
-  { title: "About Project", url: "/about", icon: Info },
 ];
 
 export function AppSidebar() {
@@ -135,7 +138,18 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        {!collapsed && (
+        <div
+          className={`w-36 shrink-0 mx-auto mb-4 overflow-hidden rounded-xl border border-primary/15 bg-mint-50/60 p-1 transition-all duration-200 ${
+            collapsed ? "invisible h-0 mb-0 p-0 border-0" : "visible h-36"
+          }`}
+        >
+          <LottieEmbed
+            src="/singing-teacher.json"
+            className="w-full h-full bg-transparent"
+            ariaLabel="Singing Teacher"
+          />
+        </div>
+        {!collapsed && currentRole === "teacher" && (
           <div className="m-1 rounded-xl border border-primary/15 bg-mint-50/60 p-3">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-[11px] font-bold text-foreground">🛠️ Dev Controller</span>
@@ -166,7 +180,18 @@ export function AppSidebar() {
             <p className="mt-2 text-[10px] text-muted-foreground">EDUP2112 · DSKP KSSR</p>
           </div>
         )}
+        {!collapsed && currentRole === "student" && (
+          <button
+            onClick={handleSwitch}
+            aria-label="Teacher Login"
+            title="Teacher Login"
+            className="m-1 self-end text-[10px] text-muted-foreground/40 transition-colors hover:text-muted-foreground"
+          >
+            Teacher Login
+          </button>
+        )}
       </SidebarFooter>
+
     </Sidebar>
   );
 }

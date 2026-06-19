@@ -12,4 +12,13 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // SSR hardening: force these runtime packages to be inlined into the server
+  // bundle instead of left externalized, so the server entry never relies on
+  // runtime module resolution. NOTE: only `noExternal` is set here — never set
+  // `ssr.external`, which breaks the Worker SSR build.
+  vite: {
+    ssr: {
+      noExternal: ["tslib", "react-remove-scroll", "lucide-react", /@radix-ui\/.*/],
+    },
+  },
 });
