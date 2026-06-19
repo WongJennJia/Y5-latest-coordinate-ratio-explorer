@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import adventureMusic from "@/assets/adventure-music.mp3.asset.json";
+const ADVENTURE_MUSIC_URL = "/audio/adventure-music.mp3";
 
 export function TopBarActions() {
   // --- Dark Mode State ---
@@ -17,6 +17,7 @@ export function TopBarActions() {
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains("dark"));
+    console.log("Audio URL:", ADVENTURE_MUSIC_URL);
   }, []);
 
   const toggleDarkMode = () => {
@@ -35,7 +36,7 @@ export function TopBarActions() {
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio(adventureMusic.url);
+      audioRef.current = new Audio(ADVENTURE_MUSIC_URL);
       audioRef.current.loop = true;
     }
     return () => {
